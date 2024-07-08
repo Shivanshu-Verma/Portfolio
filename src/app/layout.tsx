@@ -28,7 +28,7 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: "Shivanshu Verma",
   description:
-    "Shivanshu Verma is an aspiring Software Engineer and Developer from India, skilled in both front-end and back-end development using modern tech stacks.",
+    "Shivanshu is an aspiring Software Engineer and Developer from India, skilled in both front-end and back-end development using modern tech stacks.",
   robots: {
     index: true,
     follow: true,
