@@ -6,7 +6,7 @@ const ResumeButton = () => {
     <Link
       className="app__outlined_btn min-w-[12rem]"
       href={
-        "https://drive.google.com/file/d/1LMUuybYUKtroTwRAy5QackkOWCYDacYi/view?usp=drive_link"
+        "https://drive.google.com/file/d/184hehMl2Rp86knlwbdg9mD_tPvJhfRIA/view?usp=sharing"
       }
       target="_blank"
     >

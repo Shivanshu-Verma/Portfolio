@@ -8,7 +8,7 @@ import experiences from "@/data/experiences";
 const HomeSection3 = ({ id }: { id: string }) => {
   return (
     <ResponsiveBox
-      classNames="bg-[var(--dialogColor)] min-h-[calc(100vh-5rem)] items-center justify-center"
+      classNames="relative flex flex-col justify-start items-start w-full h-auto p-0 mx-auto my-0 overflow-hidden transition duration-300 ease-in-out dark:bg-[var(--bgColor)] bg-[var(--bgColor)] dark:bg-grid-small-white/[0.1] bg-grid-smaill-white/[0.1] min-h-screen items-center justify-center"
       id={id}
     >
       <ConstraintedBox classNames="p-4 py-16">

@@ -7,7 +7,7 @@ import projects from "@/data/projects";
 const HomeSection5 = ({ id }: { id: string }) => {
   return (
     <ResponsiveBox
-      classNames="bg-[var(--dialogColor)] min-h-[calc(100vh-5rem)] items-center justify-center"
+      classNames="bg-[var(--bgColor)] dark:bg-dot-white/[0.2] bg-dot-white/[0.2] min-h-[calc(100vh-5rem)] items-center justify-center"
       id={id}
     >
       <ConstraintedBox classNames="p-4 py-16">

@@ -9,7 +9,7 @@ import socialLinks from "@/data/socialLinks";
 const HomeSection6 = ({ id }: { id: string }) => {
   return (
     <ResponsiveBox
-      classNames="bg-[var(--bgColor)] min-h-[calc(100vh-5rem)] items-center justify-center"
+      classNames="bg-[var(--bgColor)] min-h-[calc(100vh-5rem)] dark:bg-grid-small-white/[0.2] bg-grid-small-white/[0.2] items-center justify-center"
       id={id}
     >
       <ConstraintedBox classNames="p-4 py-16">

@@ -1,6 +1,6 @@
 "use client";
 
-import { createRef } from "react";
+import { createRef, useEffect, useState } from "react";
 import { IProjectItem } from "@/types";
 import Row from "@/components/core/Row";
 import ProjectItem from "./ProjectItem";
@@ -8,6 +8,22 @@ import Column from "@/components/core/Column";
 
 const ProjectList = ({ projects }: Readonly<{ projects: IProjectItem[] }>) => {
   const carouselRef = createRef<HTMLDivElement>();
+  const [isScrollable, setIsScrollable] = useState(false);
+
+  useEffect(() => {
+    const checkScrollable = () => {
+      if (carouselRef.current) {
+        setIsScrollable(carouselRef.current.scrollWidth > carouselRef.current.clientWidth);
+      }
+    };
+
+    checkScrollable();
+    window.addEventListener("resize", checkScrollable);
+
+    return () => {
+      window.removeEventListener("resize", checkScrollable);
+    };
+  }, [projects]);
 
   const _handleOnClickPrev = () => {
     if (!carouselRef || carouselRef.current === null) return;
@@ -38,23 +54,25 @@ const ProjectList = ({ projects }: Readonly<{ projects: IProjectItem[] }>) => {
         })}
       </Row>
 
-      <Row classNames="w-full items-center justify-center gap-4 mt-8">
-        <button
-          type="button"
-          className="app__filled_btn !px-4 !py-2 !text-base/6 !font-normal"
-          onClick={_handleOnClickPrev}
-        >
-          Prev
-        </button>
+      {isScrollable && (
+        <Row classNames="w-full items-center justify-center gap-4 mt-8">
+          <button
+            type="button"
+            className="app__filled_btn !px-4 !py-2 !text-base/6 !font-normal"
+            onClick={_handleOnClickPrev}
+          >
+            Prev
+          </button>
 
-        <button
-          type="button"
-          className="app__filled_btn !px-4 !py-2 !text-base/6 !font-normal"
-          onClick={_handleOnClickNext}
-        >
-          Next
-        </button>
-      </Row>
+          <button
+            type="button"
+            className="app__filled_btn !px-4 !py-2 !text-base/6 !font-normal"
+            onClick={_handleOnClickNext}
+          >
+            Next
+          </button>
+        </Row>
+      )}
     </Column>
   );
 };

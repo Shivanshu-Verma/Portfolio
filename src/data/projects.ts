@@ -2,16 +2,16 @@ import { IProjectItem, ProjectType, RepoType } from "@/types";
 
 const projects: IProjectItem[] = [
   {
-    id: "single-sign-on",
-    title: "Single Sign On System",
+    id: "prometeo",
+    title: "Prometeo | IITJ TechFest Website",
     description:
-      "Implmented an SSO system to streamline authentication and authorization processes and enhance security across multiple websites.",
-    icon: "/images/sso.png",
+      "Optimized 3D models, improving performance and reducing loading time. Reduced server load with caching. Integrated payment processing system (Razorpay). Enhanced security with SSL and CSRF protection.",
+    icon: "/images/prometeo.jpg",
     repoType: RepoType.Public,
-    projectType: ProjectType.Personal,
-    githubUrl: "https://github.com/Shivanshu-Verma/SSO",
-    // url: "",
-    tags: ["React", "Django", "JWT", "Encryption"],
+    projectType: ProjectType.TeamProject,
+    githubUrl: "https://github.com/Shivanshu-Verma/server-prometeo-25",
+    url: "https://prometeo.in/",
+    tags: ["Three.js", "Django", "Docker", "Redis", "AWS"],
   },
   {
     id: "IITJ Voting App",
@@ -26,16 +26,16 @@ const projects: IProjectItem[] = [
     tags: ["React", "Django", "PostgreSQL", "Encryption", "Biometrics"],
   },
   {
-    id: "ml-classification-project",
-    title: "Image Classifier on CIFAR-10 Dataset",
+    id: "virus-detection-system",
+    title: "Virus Detection System",
     description:
-      "Developed multiple ML Models using different techniques while working my team. Highest accuracy achieved was 95%",
-    icon: "/images/ml.jpg",
+      "Implemented a multi-threaded virus scanning system using SHA256 hashing techniques, comparing over 100,000 virus signatures per second. Integrated Microsoft Detours Library for real-time API hooking and process monitoring.",
+    icon: "/images/virus.png",
     repoType: RepoType.Public,
     projectType: ProjectType.CourseWork,
-    githubUrl: "https://github.com/Shivanshu-Verma/Object-Classification",
+    githubUrl: "https://github.com/Shivanshu-Verma/Infectious-Virus-Detection-System",
     //url: "",
-    tags: ["Tensorflow", "Numpy", "PyTorch", "Scikit-Learn"],
+    tags: ["C/C++", "Microsoft Detours", "Network", "SHA256"],
   },
 ];
 
