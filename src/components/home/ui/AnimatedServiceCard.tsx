@@ -67,8 +67,7 @@ const IconSkeleton = ({ item }: Readonly<{ item: IServiceItem }>) => {
   ];
 
   useEffect(() => {
-    // @ts-ignore
-    animate(sequence, {
+    animate(sequence as any, {
       repeat: Infinity,
       repeatDelay: 1,
     });
