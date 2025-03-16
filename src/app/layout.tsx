@@ -63,6 +63,10 @@ const RootLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
   return (
     <html lang="en" className={poppins.className}>
       <head>
+        <meta
+          name="google-site-verification"
+          content="4cVXJt04ZBVCuqNFDQA8VeR4JADAVKgP0u1QtK5tNyM"
+        />
         <Script
           async
           strategy="afterInteractive"
@@ -74,7 +78,7 @@ const RootLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-          
+
           gtag('config', '${LocalConfig.values.NEXT_PUBLIC_GTAG_ID}');
         `}
         </Script>
