@@ -2,8 +2,8 @@
 
 module.exports = {
   siteUrl: "https://www.shivanshu.site",
-  changefreq: "daily",
-  priority: 0.7,
+  changefreq: "yearly",
+  priority: 1,
   sitemapSize: 5000,
   generateRobotsTxt: true,
   // Default transformation function
