@@ -64,6 +64,7 @@ const RootLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
     <html lang="en" className={poppins.className}>
       <head>
         <Script
+          async
           strategy="afterInteractive"
           src={`https://www.googletagmanager.com/gtag/js?id=${LocalConfig.values.NEXT_PUBLIC_GTAG_ID}`}
         />
@@ -73,9 +74,8 @@ const RootLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-          gtag('config', '${LocalConfig.values.NEXT_PUBLIC_GTAG_ID}', {
-            page_path: window.location.pathname,
-          });
+          
+          gtag('config', '${LocalConfig.values.NEXT_PUBLIC_GTAG_ID}');
         `}
         </Script>
       </head>
