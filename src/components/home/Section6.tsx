@@ -52,7 +52,7 @@ const HomeSection6 = ({ id }: { id: string }) => {
           </p>
           <div className="my-8 h-0.5 w-full bg-white"></div>
           <footer className="text-center mx-auto text-gray-400 mt-4 text-base">
-            2024 Shivanshu Verma | All Rights Reserved
+            {new Date().getFullYear()} Shivanshu Verma | All Rights Reserved
           </footer>
         </Column>
       </ConstraintedBox>
