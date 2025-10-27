@@ -69,7 +69,7 @@ const services: IServiceItem[] = [
     ],
     shortDescription: "I am always keen to learn about cybersecurity tools.",
     description:
-      "i am always keen to learn more about cybersecurity, I have hands-on experience with diverse tools such as Aircrack-ng for wireless security, Nmap for network scanning, Burp Suite for web application testing, and Ghidra for reverse engineering. Additionally, I use Maltego for threat intelligence, Ettercap for network interception, and John the Ripper for password cracking and analysis.",
+      "I am always keen to learn more about cybersecurity, I have hands-on experience with diverse tools such as Aircrack-ng for wireless security, Nmap for network scanning, Burp Suite for web application testing, and Ghidra for reverse engineering. Additionally, I use Maltego for threat intelligence, Ettercap for network interception, and John the Ripper for password cracking and analysis.",
   },
   {
     id: 5,
@@ -81,7 +81,8 @@ const services: IServiceItem[] = [
       "/skills/keil.png",
       "/skills/cube.svg",
     ],
-    shortDescription: "Proficient in embedded systems and IoT, with a focus on ARM Cortex architecture and real-time operating systems.",
+    shortDescription:
+      "Proficient in embedded systems and IoT, with a focus on ARM Cortex architecture and real-time operating systems.",
     description:
       "I have a comprehensive background in embedded systems and IoT, encompassing a wide range of topics such as the architecture of ARM Cortex M3 processors and embedded multicore architecture. I am skilled in programming embedded processors using assembly and C in Arduino IDE, developing models for program-data flow graphs, and working with real-time operating systems. ",
   },
