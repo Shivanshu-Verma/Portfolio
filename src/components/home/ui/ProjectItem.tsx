@@ -31,7 +31,7 @@ const ProjectItem = ({ project }: { project: IProjectItem }) => {
       role="listitem"
       className="snap-center h-full shrink-0 basis-full sm:basis-[24rem] md:basis-[26rem] lg:basis-[28rem] flex"
     >
-      <CardBox classNames="w-full h-full min-h-[24rem] sm:min-h-[28rem] lg:min-h-[32rem] p-6 gap-5 items-center justify-between bg-[var(--textColor10)] group slide_in">
+      <CardBox classNames="w-full h-full min-h-[32rem] p-6 gap-5 items-center justify-between bg-[var(--textColor10)] group slide_in">
         <Column classNames="w-full items-center gap-3">
           <Row classNames="w-[2.75rem] md:w-[3.25rem] aspect-square items-center justify-center">
             <Image
