@@ -230,7 +230,7 @@ export const metadata: Metadata = {
     ],
     apple: [
       {
-        url: "/images/prometeo.jpg",
+        url: "/images/Devops.jpeg",
         sizes: "180x180",
         type: "image/jpeg",
       },

@@ -2,6 +2,69 @@ import { IProjectItem, ProjectType, RepoType } from "@/types";
 
 const projects: IProjectItem[] = [
   {
+    id: "kubernetes-orchestration",
+    title: "Cost-Efficient Kubernetes Orchestration",
+    description:
+      "Engineered a custom Kubernetes scheduler and autoscaler (HTAS) on GKE, optimizing container placement across heterogeneous VMs for 10+ services and batch workloads, achieving 28% cost savings.",
+    icon: "/images/kubernetes-project.png",
+    repoType: RepoType.Public,
+    projectType: ProjectType.TeamProject,
+    githubUrl: "https://github.com/Shivanshu-Verma/VCC_Course_Project",
+    tags: ["Kubernetes", "GCP", "Python", "Autoscaling", "Cloud Optimization"],
+    summary:
+      "Developed a cost-optimized Kubernetes orchestration system featuring a hybrid task autoscaler and custom scheduling algorithms for heterogeneous cluster environments on Google Cloud.",
+    duration: "Jan 2025 – Apr 2025",
+    location: "IIT Jodhpur, India",
+    roles: ["Cloud Architect", "Systems Engineer"],
+    responsibilities: [
+      "Built a custom Kubernetes scheduler and autoscaler (HTAS) leveraging CRDs and event-driven scaling for GKE clusters",
+      "Designed the Resource Profiler for dynamic workload characterization and Task Packer using BFD/TBFD bin-packing algorithms",
+      "Benchmarked performance through synthetic and real workloads, tuning placement heuristics for compute heterogeneity",
+    ],
+    highlights: [
+      "Achieved 28% cost reduction and 35% higher utilization compared to default GKE scheduler",
+      "Implemented fault-tolerant scheduling logic resilient to preemptible VM churn",
+      "Enabled per-pod telemetry collection with Prometheus for real-time scaling insight",
+    ],
+    metrics: [
+      {
+        label: "Cost reduction",
+        value: "↓ 28%",
+        description:
+          "Measured through comparative GCP billing analysis across identical workloads",
+      },
+      {
+        label: "Utilization gain",
+        value: "+35%",
+        description:
+          "Average CPU/memory efficiency improvement on test cluster",
+      },
+      {
+        label: "Services orchestrated",
+        value: "10+",
+        description: "Microservices and batch workloads balanced across nodes",
+      },
+    ],
+    links: [
+      {
+        title: "Source code",
+        url: "https://github.com/Shivanshu-Verma/VCC_Course_Project",
+        type: "github",
+      },
+      {
+        title: "Implemented Research Paper",
+        url: "https://dl.acm.org/doi/abs/10.1145/3378447",
+        type: "live",
+      },
+    ],
+    context:
+      "High GKE costs from inefficient default scheduling motivated the need for custom orchestration tuned for mixed workloads and preemptible resources.",
+    approach:
+      "Devised a modular Kubernetes extension with CRDs and autoscaling logic driven by real-time resource profiling, integrating seamlessly with GCP’s managed cluster APIs.",
+    impact:
+      "Delivered a cost-conscious orchestration platform demonstrating tangible infrastructure savings and improved utilization, informing future IITJ cloud infrastructure research.",
+  },
+  {
     id: "prometeo",
     title: "Prometeo | IITJ TechFest Website",
     description:
@@ -70,7 +133,7 @@ const projects: IProjectItem[] = [
     title: "IITJ Voting Electron App",
     description:
       "Voting Portal to conduct Institute student representative elections for IITJ Community.",
-    icon: "/skills/react.svg",
+    icon: "/images/voting.png",
     repoType: RepoType.Private,
     projectType: ProjectType.TeamProject,
     githubUrl: "https://github.com/Shivanshu-Verma/IITJ-Voting",
@@ -105,7 +168,7 @@ const projects: IProjectItem[] = [
     ],
     links: [
       {
-        title: "Implementation notes",
+        title: "Source code (private-request access)",
         url: "https://github.com/Shivanshu-Verma/IITJ-Voting",
         type: "github",
       },

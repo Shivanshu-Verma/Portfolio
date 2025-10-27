@@ -14,12 +14,12 @@
       "purpose": "any maskable"
     },
     {
-      "src": "/images/prometeo.jpg",
+      "src": "/images/Devops.jpeg",
       "sizes": "192x192",
       "type": "image/jpeg"
     },
     {
-      "src": "/images/ml.jpg",
+      "src": "/images/virus.png",
       "sizes": "512x512",
       "type": "image/jpeg"
     }
