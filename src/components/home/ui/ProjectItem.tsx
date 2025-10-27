@@ -31,8 +31,8 @@ const ProjectItem = ({ project }: { project: IProjectItem }) => {
       role="listitem"
       className="snap-center h-full"
     >
-      <CardBox classNames="w-full h-full min-h-[30rem] sm:min-h-[34rem] min-w-[calc(100%-2rem)] sm:min-w-[25rem] md:min-w-[28rem] p-4 gap-6 items-center justify-between bg-[var(--textColor10)] group slide_in">
-        <Column classNames="w-full items-center justify-start">
+      <CardBox classNames="w-full h-full min-h-[26rem] sm:min-h-[30rem] lg:min-h-[32rem] min-w-[calc(100%-2rem)] sm:min-w-[25rem] md:min-w-[28rem] p-4 gap-4 items-center justify-between bg-[var(--textColor10)] group slide_in">
+        <Column classNames="w-full items-center justify-start gap-4">
           <Row classNames="w-[2.5rem] md:w-[3rem] aspect-square items-center justify-center">
             <Image
               src={project.icon}
@@ -85,7 +85,7 @@ const ProjectItem = ({ project }: { project: IProjectItem }) => {
           </div>
 
           {hasExternalLinks ? (
-            <Row classNames="w-full items-center justify-center mt-4 gap-2">
+            <Row classNames="w-full items-center justify-center gap-2">
               {githubUrl ? (
                 <Link
                   href={githubUrl}
@@ -120,24 +120,24 @@ const ProjectItem = ({ project }: { project: IProjectItem }) => {
 
           <Link
             href={`/projects/${project.id}`}
-            className="app__outlined_btn !px-4 !py-2 !text-sm/6 mt-4 !w-full sm:!w-auto text-center"
+            className="app__outlined_btn !px-4 !py-2 !text-sm/6 !w-full sm:!w-auto text-center"
           >
             Read case study
           </Link>
         </Column>
 
-        <Column classNames="w-full items-center">
+        <Column classNames="w-full items-center flex-1 justify-between gap-4">
           <p className="text-center text-base/6 text-[var(--textColorLight)]">
             <Balancer>{project.description}</Balancer>
           </p>
 
           {project.tags && project.tags.length > 0 ? (
-            <Row classNames="w-full items-center justify-center flex-wrap mt-4">
+            <Row classNames="w-full items-center justify-center flex-wrap gap-2">
               {project.tags.map((tag, i) => {
                 return (
                   <p
                     key={`tag-${i}`}
-                    className="rounded-[var(--borderRadius)] border border-[var(--textColor50)] py-[.125rem] px-2 mr-2 mb-2 text-xs/6 font-normal"
+                    className="rounded-[var(--borderRadius)] border border-[var(--textColor50)] py-[.125rem] px-2 text-xs/6 font-normal"
                   >
                     {tag}
                   </p>

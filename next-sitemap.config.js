@@ -10,7 +10,7 @@ module.exports = {
   changefreq: "monthly",
   priority: 0.7,
   sitemapSize: 5000,
-  generateRobotsTxt: false,
+  generateRobotsTxt: true,
   transform: async (config, path) => {
     const highPriorityPaths = new Set(["/", "/projects"]);
 
