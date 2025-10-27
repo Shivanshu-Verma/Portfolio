@@ -83,14 +83,14 @@ export async function generateMetadata({
   const description = project.summary ?? project.description;
 
   return {
-    title: `${project.title} Case Study | ${Strings.fullName}`,
+    title: `${project.title} Project Overview | ${Strings.fullName}`,
     description,
     alternates: {
       canonical: pageUrl,
     },
     keywords: project.tags,
     openGraph: {
-      title: `${project.title} · Case Study`,
+      title: `${project.title} · Project Overview`,
       description,
       url: pageUrl,
       type: "article",
@@ -106,7 +106,7 @@ export async function generateMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title: `${project.title} · Case Study`,
+      title: `${project.title} · Project Overview`,
       description,
       creator: Strings.shortName,
       images: [imageUrl],
@@ -371,45 +371,45 @@ const ProjectPage = ({ params }: ProjectPageProps) => {
           </section>
         ) : null}
 
-        {project.problem || project.solution || project.outcome ? (
+        {project.context || project.approach || project.impact ? (
           <section
             aria-labelledby="project-narrative-heading"
             className="flex flex-col gap-8"
           >
             <SectionTitle
               id="project-narrative-heading"
-              subtitle="Understanding the challenge, approach, and measurable results"
+              subtitle="Snapshot of the project background, execution, and results"
             >
-              Case study
+              Project narrative
             </SectionTitle>
             <div className="grid gap-6 md:grid-cols-3">
-              {project.problem ? (
+              {project.context ? (
                 <article className="rounded-2xl border border-[var(--textColor20)] bg-[var(--textColor10)] p-6">
                   <h3 className="text-xl/8 font-semibold text-[var(--textColor)]">
-                    The challenge
+                    Project context
                   </h3>
                   <p className="mt-3 text-base/7 text-[var(--textColorLight)]">
-                    {project.problem}
+                    {project.context}
                   </p>
                 </article>
               ) : null}
-              {project.solution ? (
+              {project.approach ? (
                 <article className="rounded-2xl border border-[var(--textColor20)] bg-[var(--textColor10)] p-6">
                   <h3 className="text-xl/8 font-semibold text-[var(--textColor)]">
-                    Solution
+                    Approach
                   </h3>
                   <p className="mt-3 text-base/7 text-[var(--textColorLight)]">
-                    {project.solution}
+                    {project.approach}
                   </p>
                 </article>
               ) : null}
-              {project.outcome ? (
+              {project.impact ? (
                 <article className="rounded-2xl border border-[var(--textColor20)] bg-[var(--textColor10)] p-6">
                   <h3 className="text-xl/8 font-semibold text-[var(--textColor)]">
-                    Outcome
+                    Impact
                   </h3>
                   <p className="mt-3 text-base/7 text-[var(--textColorLight)]">
-                    {project.outcome}
+                    {project.impact}
                   </p>
                 </article>
               ) : null}

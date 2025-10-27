@@ -121,8 +121,9 @@ const ProjectItem = ({ project }: { project: IProjectItem }) => {
           <Link
             href={`/projects/${project.id}`}
             className="app__outlined_btn !px-4 !py-2 !text-sm/6 !w-full sm:!w-auto text-center"
+            aria-label={`View more details about ${project.title}`}
           >
-            Read case study
+            More details
           </Link>
         </Column>
 

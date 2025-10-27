@@ -58,11 +58,11 @@ const projects: IProjectItem[] = [
         type: "github",
       },
     ],
-    problem:
+    context:
       "The organising team needed a visually striking web presence that could withstand sudden ticket sale surges without compromising security or UX.",
-    solution:
+    approach:
       "Modernised the 3D experience with progressive loading, served content through a hardened Django API, and containerised the stack with CI-driven deployments.",
-    outcome:
+    impact:
       "Delivered a resilient launch with stellar Core Web Vitals, higher conversion on passes, and positive feedback from attendees and sponsors.",
   },
   {
@@ -110,11 +110,11 @@ const projects: IProjectItem[] = [
         type: "github",
       },
     ],
-    problem:
+    context:
       "Manual paper-based elections were error-prone, slow, and vulnerable to manipulation.",
-    solution:
+    approach:
       "Built a secure digital voting system with layered authentication, offline resilience, and transparent audit trails.",
-    outcome:
+    impact:
       "Used successfully in the 2023 student body elections with no disputed ballots and rapid result publication.",
   },
   {
@@ -163,11 +163,11 @@ const projects: IProjectItem[] = [
         type: "github",
       },
     ],
-    problem:
+    context:
       "Needed a performant detection prototype to explore real-time malware interception without access to enterprise antiviruses.",
-    solution:
+    approach:
       "Combined hash-based scanning with API hooking, enabling rapid signature checks alongside behavioural heuristics.",
-    outcome:
+    impact:
       "Demonstrated reliable detection in academic evaluations and provided a foundation for further research.",
   },
 ];

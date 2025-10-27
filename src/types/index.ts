@@ -58,9 +58,9 @@ export interface IProjectItem {
   links?: IProjectLink[];
   screenshots?: string[];
   about?: string;
-  problem?: string;
-  solution?: string;
-  outcome?: string;
+  context?: string;
+  approach?: string;
+  impact?: string;
 }
 
 export interface IProjectMetric {
