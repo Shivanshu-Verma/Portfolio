@@ -29,11 +29,11 @@ const ProjectItem = ({ project }: { project: IProjectItem }) => {
     <article
       aria-labelledby={`${project.id}-title`}
       role="listitem"
-      className="snap-center h-full"
+      className="snap-center h-full shrink-0 basis-full sm:basis-[24rem] md:basis-[26rem] lg:basis-[28rem] flex"
     >
-      <CardBox classNames="w-full h-full min-h-[26rem] sm:min-h-[30rem] lg:min-h-[32rem] min-w-[calc(100%-2rem)] sm:min-w-[25rem] md:min-w-[28rem] p-4 gap-4 items-center justify-between bg-[var(--textColor10)] group slide_in">
-        <Column classNames="w-full items-center justify-start gap-4">
-          <Row classNames="w-[2.5rem] md:w-[3rem] aspect-square items-center justify-center">
+      <CardBox classNames="w-full h-full min-h-[24rem] sm:min-h-[28rem] lg:min-h-[32rem] p-6 gap-5 items-center justify-between bg-[var(--textColor10)] group slide_in">
+        <Column classNames="w-full items-center gap-3">
+          <Row classNames="w-[2.75rem] md:w-[3.25rem] aspect-square items-center justify-center">
             <Image
               src={project.icon}
               alt={`${project.title} cover graphic`}
@@ -49,14 +49,14 @@ const ProjectItem = ({ project }: { project: IProjectItem }) => {
 
           <Link
             href={`/projects/${project.id}`}
-            className="mt-4 text-lg/6 font-semibold text-[var(--textColor)] hover:text-[var(--primaryColor)] transition"
+            className="text-lg/6 font-semibold text-center text-[var(--textColor)] hover:text-[var(--primaryColor)] transition"
             id={`${project.id}-title`}
           >
             {project.title}
           </Link>
 
           <div
-            className={`flex flex-row items-center justify-center rounded-full py-[0.05] px-[0.5rem] mt-4 capitalize text-center border ${
+            className={`flex flex-row items-center justify-center rounded-full py-[0.1rem] px-2 capitalize text-center border ${
               project.repoType === RepoType.Private
                 ? "text-[var(--errorColor)] border-[var(--errorColor50)]"
                 : "text-[var(--successColor)] border-[var(--successColor50)]"
@@ -67,7 +67,7 @@ const ProjectItem = ({ project }: { project: IProjectItem }) => {
             </p>
           </div>
           <div
-            className={`flex flex-row items-center justify-center rounded-full py-[0.05] px-[0.5rem] mt-4 capitalize text-center border ${
+            className={`flex flex-row items-center justify-center rounded-full py-[0.1rem] px-2 capitalize text-center border ${
               project.projectType === ProjectType.CourseWork
                 ? "text-[var(--errorColor)] border-[var(--errorColor50)]"
                 : "text-[var(--successColor)] border-[var(--successColor50)]"
@@ -127,8 +127,8 @@ const ProjectItem = ({ project }: { project: IProjectItem }) => {
           </Link>
         </Column>
 
-        <Column classNames="w-full items-center flex-1 justify-between gap-4">
-          <p className="text-center text-base/6 text-[var(--textColorLight)]">
+        <Column classNames="w-full flex-1 items-center justify-between gap-4">
+          <p className="text-center text-sm/6 md:text-base/6 text-[var(--textColorLight)]">
             <Balancer>{project.description}</Balancer>
           </p>
 
