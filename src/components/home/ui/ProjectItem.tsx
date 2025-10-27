@@ -15,6 +15,10 @@ import CardBox from "@/components/core/CardBox";
 const ProjectItem = ({ project }: { project: IProjectItem }) => {
   const router = useRouter();
 
+  const githubUrl = project.githubUrl;
+  const liveUrl = project.url;
+  const hasExternalLinks = Boolean(githubUrl || liveUrl);
+
   const _handleNavigateToPage = (id: string) => {
     if (!id || id.length < 1) return;
 
@@ -22,8 +26,12 @@ const ProjectItem = ({ project }: { project: IProjectItem }) => {
   };
 
   return (
-    <article aria-labelledby={`${project.id}-title`} role="listitem">
-      <CardBox classNames="min-w-[calc(100%-2rem)] sm:min-w-[25rem] md:min-w-[28rem] aspect-[3/5] max-h-[30rem] p-4 gap-8 items-center justify-between bg-[var(--textColor10)] group slide_in">
+    <article
+      aria-labelledby={`${project.id}-title`}
+      role="listitem"
+      className="snap-center h-full"
+    >
+      <CardBox classNames="w-full h-full min-h-[30rem] sm:min-h-[34rem] min-w-[calc(100%-2rem)] sm:min-w-[25rem] md:min-w-[28rem] p-4 gap-6 items-center justify-between bg-[var(--textColor10)] group slide_in">
         <Column classNames="w-full items-center justify-start">
           <Row classNames="w-[2.5rem] md:w-[3rem] aspect-square items-center justify-center">
             <Image
@@ -76,44 +84,46 @@ const ProjectItem = ({ project }: { project: IProjectItem }) => {
             </p>
           </div>
 
-          <Row classNames="w-full items-center justify-center mt-4 gap-2">
-            <Link
-              href={`/projects/${project.id}`}
-              className="app__outlined_btn !px-4 !py-2 !text-sm/6"
-            >
-              Read case study
-            </Link>
+          {hasExternalLinks ? (
+            <Row classNames="w-full items-center justify-center mt-4 gap-2">
+              {githubUrl ? (
+                <Link
+                  href={githubUrl}
+                  aria-label={`${project.title} GitHub URL`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="app__outlined_btn !rounded-full !p-2 lg:!p-3 !aspect-square !border-[var(--textColor)]"
+                >
+                  <FontAwesomeIcon
+                    icon={faGithub}
+                    className="text-base/6 text-[var(--textColor)]"
+                  />
+                </Link>
+              ) : null}
 
-            {project.githubUrl ? (
-              <Link
-                href={project.githubUrl}
-                aria-label={`${project.title} GitHub URL`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="app__outlined_btn !rounded-full !p-2 lg:!p-3 !aspect-square !border-[var(--textColor)]"
-              >
-                <FontAwesomeIcon
-                  icon={faGithub}
-                  className="text-base/6 text-[var(--textColor)]"
-                />
-              </Link>
-            ) : null}
+              {liveUrl ? (
+                <Link
+                  href={liveUrl}
+                  aria-label={`${project.title} live demo`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="app__outlined_btn !rounded-full !p-2 lg:!p-3 !aspect-square !border-[var(--textColor)]"
+                >
+                  <FontAwesomeIcon
+                    icon={faEye}
+                    className="text-base/6 text-[var(--textColor)]"
+                  />
+                </Link>
+              ) : null}
+            </Row>
+          ) : null}
 
-            {project.url ? (
-              <Link
-                href={project.url}
-                aria-label={`${project.title} live demo`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="app__outlined_btn !rounded-full !p-2 lg:!p-3 !aspect-square !border-[var(--textColor)]"
-              >
-                <FontAwesomeIcon
-                  icon={faEye}
-                  className="text-base/6 text-[var(--textColor)]"
-                />
-              </Link>
-            ) : null}
-          </Row>
+          <Link
+            href={`/projects/${project.id}`}
+            className="app__outlined_btn !px-4 !py-2 !text-sm/6 mt-4 !w-full sm:!w-auto text-center"
+          >
+            Read case study
+          </Link>
         </Column>
 
         <Column classNames="w-full items-center">

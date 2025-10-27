@@ -9,7 +9,7 @@ const HomeSection5 = ({ id }: { id: string }) => {
 
   return (
     <section id={id} aria-labelledby={headingId} className="w-full">
-      <ResponsiveBox classNames="bg-[var(--bgColor)] dark:bg-dot-white/[0.2] bg-dot-white/[0.2] min-h-[calc(100vh-5rem)] items-center justify-center">
+      <ResponsiveBox classNames="bg-[var(--bgColor)] dark:bg-dot-white/[0.2] bg-dot-white/[0.2] min-h-[calc(100vh-5rem)] items-center justify-center overflow-visible">
         <ConstraintedBox classNames="p-4 py-16">
           <SectionTitle
             id={headingId}

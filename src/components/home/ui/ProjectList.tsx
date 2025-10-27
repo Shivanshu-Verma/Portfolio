@@ -1,54 +1,62 @@
 "use client";
 
-import { createRef, useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IProjectItem } from "@/types";
 import Row from "@/components/core/Row";
 import ProjectItem from "./ProjectItem";
 import Column from "@/components/core/Column";
 
 const ProjectList = ({ projects }: Readonly<{ projects: IProjectItem[] }>) => {
-  const carouselRef = createRef<HTMLDivElement>();
+  const carouselRef = useRef<HTMLDivElement | null>(null);
   const [isScrollable, setIsScrollable] = useState(false);
 
   useEffect(() => {
-    const checkScrollable = () => {
-      if (carouselRef.current) {
-        setIsScrollable(
-          carouselRef.current.scrollWidth > carouselRef.current.clientWidth
-        );
-      }
+    const element = carouselRef.current;
+    if (!element) return;
+
+    const updateScrollability = () => {
+      setIsScrollable(element.scrollWidth > element.clientWidth + 1);
     };
 
-    checkScrollable();
-    window.addEventListener("resize", checkScrollable);
+    const handleResize = () => {
+      requestAnimationFrame(updateScrollability);
+    };
+
+    updateScrollability();
+    window.addEventListener("resize", handleResize);
+
+    let resizeObserver: ResizeObserver | null = null;
+    if (typeof window !== "undefined" && "ResizeObserver" in window) {
+      resizeObserver = new ResizeObserver(() => handleResize());
+      resizeObserver.observe(element);
+    }
 
     return () => {
-      window.removeEventListener("resize", checkScrollable);
+      window.removeEventListener("resize", handleResize);
+      resizeObserver?.disconnect();
     };
   }, [projects]);
 
   const _handleOnClickPrev = () => {
-    if (!carouselRef || carouselRef.current === null) return;
+    const container = carouselRef.current;
+    if (!container) return;
 
-    let offset = 400;
-    if (window.innerWidth < 480) offset = 280;
-
-    carouselRef.current.scrollLeft -= offset;
+    const offset = container.clientWidth || 400;
+    container.scrollBy({ left: -offset, behavior: "smooth" });
   };
 
   const _handleOnClickNext = () => {
-    if (!carouselRef || carouselRef.current === null) return;
+    const container = carouselRef.current;
+    if (!container) return;
 
-    let offset = 400;
-    if (window.innerWidth < 480) offset = 280;
-
-    carouselRef.current.scrollLeft += offset;
+    const offset = container.clientWidth || 400;
+    container.scrollBy({ left: offset, behavior: "smooth" });
   };
 
   return (
     <Column classNames="w-full mt-16" ariaLabel="Projects carousel">
       <Row
-        classNames="w-full gap-4 overflow-x-auto no-scrollbar"
+        classNames="w-full gap-4 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory px-1 items-stretch"
         elementRef={carouselRef}
         role="list"
         ariaLabel="Highlighted software projects"
