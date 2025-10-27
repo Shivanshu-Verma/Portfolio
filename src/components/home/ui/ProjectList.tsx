@@ -13,7 +13,9 @@ const ProjectList = ({ projects }: Readonly<{ projects: IProjectItem[] }>) => {
   useEffect(() => {
     const checkScrollable = () => {
       if (carouselRef.current) {
-        setIsScrollable(carouselRef.current.scrollWidth > carouselRef.current.clientWidth);
+        setIsScrollable(
+          carouselRef.current.scrollWidth > carouselRef.current.clientWidth
+        );
       }
     };
 
@@ -44,10 +46,13 @@ const ProjectList = ({ projects }: Readonly<{ projects: IProjectItem[] }>) => {
   };
 
   return (
-    <Column classNames="w-full mt-16">
+    <Column classNames="w-full mt-16" ariaLabel="Projects carousel">
       <Row
         classNames="w-full gap-4 overflow-x-auto no-scrollbar"
         elementRef={carouselRef}
+        role="list"
+        ariaLabel="Highlighted software projects"
+        ariaDescribedBy="projects-heading"
       >
         {projects.map((item, index) => {
           return <ProjectItem key={`project-item-${index}`} project={item} />;
@@ -60,6 +65,7 @@ const ProjectList = ({ projects }: Readonly<{ projects: IProjectItem[] }>) => {
             type="button"
             className="app__filled_btn !px-4 !py-2 !text-base/6 !font-normal"
             onClick={_handleOnClickPrev}
+            aria-label="Scroll projects carousel to previous items"
           >
             Prev
           </button>
@@ -68,6 +74,7 @@ const ProjectList = ({ projects }: Readonly<{ projects: IProjectItem[] }>) => {
             type="button"
             className="app__filled_btn !px-4 !py-2 !text-base/6 !font-normal"
             onClick={_handleOnClickNext}
+            aria-label="Scroll projects carousel to next items"
           >
             Next
           </button>

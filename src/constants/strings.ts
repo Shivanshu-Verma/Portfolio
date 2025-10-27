@@ -22,9 +22,10 @@ class Strings {
   static email = "Email";
   static primaryEmailLink = "mailto:v2.shivanshu@gmail.com";
   static primaryEmail = "v2.shivanshu@gmail.com";
+  static primaryPhone = "+918840072274";
 
   static fullName = "Shivanshu Verma";
-  static shortName = "ShivanshuV";
+  static shortName = "ShivanshuV_";
 }
 
 export default Strings;

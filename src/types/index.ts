@@ -48,8 +48,31 @@ export interface IProjectItem {
   githubUrl?: string;
   url?: string;
   tags?: string[];
-  sceenshots?: string[];
+  summary?: string;
+  duration?: string;
+  location?: string;
+  roles?: string[];
+  responsibilities?: string[];
+  highlights?: string[];
+  metrics?: IProjectMetric[];
+  links?: IProjectLink[];
+  screenshots?: string[];
   about?: string;
+  problem?: string;
+  solution?: string;
+  outcome?: string;
+}
+
+export interface IProjectMetric {
+  label: string;
+  value: string;
+  description?: string;
+}
+
+export interface IProjectLink {
+  title: string;
+  url: string;
+  type?: "github" | "live" | "demo" | "deck" | "docs" | "press";
 }
 
 export type IServiceItem = {
@@ -112,6 +135,9 @@ export interface CoreComponentsProps {
   onClick?: MouseEventHandler<HTMLDivElement>;
   id?: string;
   elementRef?: RefObject<HTMLDivElement>;
+  role?: string;
+  ariaLabel?: string;
+  ariaDescribedBy?: string;
 }
 
 export interface ViewportProps {

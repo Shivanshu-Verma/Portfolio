@@ -1,0 +1,31 @@
+{
+  "name": "Shivanshu Verma Portfolio",
+  "short_name": "Shivanshu",
+  "description": "Portfolio and contact hub for Shivanshu Verma – software engineer, cybersecurity enthusiast, and student leader at IIT Jodhpur.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050505",
+  "theme_color": "#050505",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/images/placeholder.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/placeholder.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

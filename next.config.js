@@ -1,6 +1,4 @@
 /** @type {import('next').NextConfig} */
-const path = require("path");
-
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
@@ -8,14 +6,25 @@ const nextConfig = {
     remotePatterns: [
       { protocol: "https", hostname: "**.githubusercontent.com" },
       { protocol: "https", hostname: "**.github.com" },
+      { protocol: "https", hostname: "cdn.buymeacoffee.com" },
+      { protocol: "https", hostname: "storage.ko-fi.com" },
     ],
+  },
+  eslint: {
+    // Allow production builds to complete even if ESLint finds warnings.
+    ignoreDuringBuilds: true,
+  },
+  trailingSlash: false,
+  poweredByHeader: false,
+  generateBuildId: async () => {
+    if (process.env.NEXT_BUILD_ID) {
+      return process.env.NEXT_BUILD_ID;
+    }
+    return `${Date.now()}`;
+  },
+  experimental: {
+    instrumentationHook: true,
   },
 };
 
-module.exports = {
-  eslint: {
-    // Warning: This allows production builds to successfully complete even if
-    // your project has ESLint errors.
-    ignoreDuringBuilds: true,
-  },
-};
+module.exports = nextConfig;

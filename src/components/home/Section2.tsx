@@ -5,18 +5,22 @@ import { HoverLayoutGrid } from "@/components/common/HoverLayoutGrid";
 import services from "@/data/services";
 
 const HomeSection2 = ({ id }: { id: string }) => {
-  return (
-    <ResponsiveBox
-      classNames="dark:bg-[var(--bgColor)] bg-[var(--bgColor)] min-h-screen items-center justify-center dark:bg-dot-white/[0.2] bg-dot-white/[0.2] rounded-md"
-      id={id}
-    >
-      {/* <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black bg-black [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div> */}
+  const headingId = `${id}-heading`;
 
-      <ConstraintedBox classNames="p-4 py-16 z-20">
-        <SectionTitle>Interests</SectionTitle>
-        <HoverLayoutGrid cards={services} />
-      </ConstraintedBox>
-    </ResponsiveBox>
+  return (
+    <section id={id} aria-labelledby={headingId} className="w-full">
+      <ResponsiveBox classNames="dark:bg-[var(--bgColor)] bg-[var(--bgColor)] min-h-screen items-center justify-center dark:bg-dot-white/[0.2] bg-dot-white/[0.2] rounded-md">
+        <ConstraintedBox classNames="p-4 py-16 z-20">
+          <SectionTitle
+            id={headingId}
+            subtitle="A snapshot of the domains where I love experimenting, building, and mentoring teams."
+          >
+            Interests & Focus Areas
+          </SectionTitle>
+          <HoverLayoutGrid cards={services} />
+        </ConstraintedBox>
+      </ResponsiveBox>
+    </section>
   );
 };
 

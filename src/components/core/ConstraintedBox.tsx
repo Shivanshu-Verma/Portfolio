@@ -1,7 +1,16 @@
 import type { CoreComponentsProps } from "@/types";
 
 const ConstraintedBox = (props: Readonly<CoreComponentsProps>) => {
-  const { children, classNames, onClick, id, elementRef } = props;
+  const {
+    children,
+    classNames,
+    id,
+    elementRef,
+    onClick,
+    role,
+    ariaLabel,
+    ariaDescribedBy,
+  } = props;
 
   return (
     <div
@@ -9,6 +18,9 @@ const ConstraintedBox = (props: Readonly<CoreComponentsProps>) => {
       id={id}
       ref={elementRef}
       onClick={onClick}
+      role={role}
+      aria-label={ariaLabel}
+      aria-describedby={ariaDescribedBy}
     >
       {children}
     </div>
