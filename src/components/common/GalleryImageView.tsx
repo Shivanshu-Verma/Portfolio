@@ -13,8 +13,6 @@ const GalleryImageView = ({
       sizes="100%"
       priority={false}
       loading="lazy"
-      placeholder="blur"
-      blurDataURL="/images/placeholder.png"
       className="w-full h-auto max-h-[calc(100vh-8rem)] object-contain m-auto"
     />
   );

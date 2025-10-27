@@ -59,7 +59,7 @@ const structuredData = [
       "Software engineer, full stack developer, and cybersecurity enthusiast building secure, scalable products and leading student communities.",
     url: siteUrl,
     "@id": `${normalizedBase}#person`,
-    image: `${normalizedBase}/images/prometeo.jpg`,
+    image: `${normalizedBase}/icon.svg`,
     jobTitle: "Software Engineer & Cybersecurity Enthusiast",
     worksFor: [
       {
@@ -221,21 +221,21 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/favicon.ico", rel: "icon", type: "image/x-icon" },
       {
         url: "/icon.svg",
         rel: "icon",
         type: "image/svg+xml",
+        sizes: "any",
       },
     ],
     apple: [
       {
-        url: "/images/placeholder.png",
+        url: "/images/prometeo.jpg",
         sizes: "180x180",
-        type: "image/png",
+        type: "image/jpeg",
       },
     ],
-    shortcut: ["/favicon.ico"],
+    shortcut: ["/icon.svg"],
   },
   manifest: "/site.webmanifest",
   colorScheme: "dark light",
