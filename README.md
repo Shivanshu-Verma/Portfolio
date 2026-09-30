@@ -11,6 +11,7 @@ content-first design ("engineer's notebook") with light and dark themes and an M
 - **content-collections** + MDX for posts, **rehype-pretty-code / Shiki** for code highlighting
 - **lucide-react** for UI icons; inline SVG brand marks
 - `next/og` social images for the site, every project and every post
+- **Vercel Speed Insights** (real-user Core Web Vitals) and optional Google Analytics
 - ESLint 9 (flat config) and Prettier (with `prettier-plugin-tailwindcss`)
 
 ## Getting started
@@ -105,6 +106,11 @@ src/
 Deployed on Vercel. Vercel doesn't natively support pnpm 11 yet, so set
 `ENABLE_EXPERIMENTAL_COREPACK=1` (Production and Preview) so it uses the version pinned in
 `packageManager`. The build log should show that pnpm version.
+
+Speed Insights also needs to be enabled once in the Vercel dashboard (project → **Speed Insights** →
+**Enable**). The script is served by Vercel at `/_vercel/speed-insights/script.js`, so it 404s
+locally and in `pnpm start`; that is expected. In `pnpm dev` it runs in debug mode and logs
+metrics to the console instead of sending them.
 
 ## License
 

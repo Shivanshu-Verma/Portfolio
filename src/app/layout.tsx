@@ -4,6 +4,7 @@ import type { Metadata, Viewport } from "next";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import SiteFooter from "@/components/layout/SiteFooter";
 import SiteHeader from "@/components/layout/SiteHeader";
 import { posts } from "@/lib/posts";
@@ -155,6 +156,7 @@ const RootLayout = ({ children }: Readonly<{ children: ReactNode }>) => (
         {children}
       </main>
       <SiteFooter />
+      <SpeedInsights />
     </body>
     {site.gaId ? <GoogleAnalytics gaId={site.gaId} /> : null}
   </html>
