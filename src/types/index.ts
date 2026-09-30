@@ -52,6 +52,7 @@ export interface IExperienceItem {
   end?: string;
   current?: boolean;
   summary?: string;
+  highlights?: string[];
 }
 
 export interface IStackGroup {

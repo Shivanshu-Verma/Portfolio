@@ -22,10 +22,12 @@ const About = ({
         <dl className="flex min-w-0 flex-[1_1_280px] flex-col gap-5">
           <div className="flex flex-col gap-1">
             <dt className={factLabel}>Education</dt>
-            <dd className="text-[15px]">
-              {degree ? `${degree}, ` : null}
-              {school}
-              {year ? <span className="text-faint"> · {year}</span> : null}
+            <dd className="flex flex-col text-[15px]">
+              {degree ? <span>{degree}</span> : null}
+              <span className={degree ? "text-muted" : undefined}>
+                {school}
+                {year ? <span className="text-faint"> · {year}</span> : null}
+              </span>
             </dd>
           </div>
           <div className="flex flex-col gap-1">

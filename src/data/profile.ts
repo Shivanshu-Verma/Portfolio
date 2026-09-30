@@ -1,4 +1,3 @@
-// Education `degree`/`year` render only when set.
 const profile = {
   status: "SDE-2 at DoubleTick",
   tagline:
@@ -11,8 +10,8 @@ const profile = {
     "I write here about backend systems, infrastructure and security: mostly things I had to figure out the hard way.",
   education: {
     school: "IIT Jodhpur",
-    degree: undefined as string | undefined,
-    year: undefined as string | undefined,
+    degree: "B.Tech in Computer Science and Electrical Engineering",
+    year: "2026",
   },
   recognition: "Top 5 of 21 IITs, Inter-IIT Tech Meet 12.0 cybersecurity",
   languages: "English, Hindi",
