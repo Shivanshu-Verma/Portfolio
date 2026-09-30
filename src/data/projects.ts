@@ -1,47 +1,39 @@
-import { IProjectItem, ProjectType, RepoType } from "@/types";
+import type { IProjectItem } from "@/types";
 
 const projects: IProjectItem[] = [
   {
     id: "kubernetes-orchestration",
-    title: "Cost-Efficient Kubernetes Orchestration",
+    title: "Cost-efficient Kubernetes orchestration",
+    kind: "Team project",
+    repo: "public",
+    year: "2025",
+    note: "GCP",
     description:
-      "Engineered a custom Kubernetes scheduler and autoscaler (HTAS) on GKE, optimizing container placement across heterogeneous VMs for 10+ services and batch workloads, achieving 28% cost savings.",
-    icon: "/images/kubernetes-project.png",
-    repoType: RepoType.Public,
-    projectType: ProjectType.TeamProject,
-    githubUrl: "https://github.com/Shivanshu-Verma/VCC_Course_Project",
-    tags: ["Kubernetes", "GCP", "Python", "Autoscaling", "Cloud Optimization"],
+      "A custom scheduler and hybrid autoscaler that bin-packs mixed workloads onto heterogeneous, preemptible VMs.",
     summary:
-      "Developed a cost-optimized Kubernetes orchestration system featuring a hybrid task autoscaler and custom scheduling algorithms for heterogeneous cluster environments on Google Cloud.",
-    duration: "Jan 2025 – Apr 2025",
-    location: "IIT Jodhpur, India",
-    roles: ["Cloud Architect", "Systems Engineer"],
-    responsibilities: [
-      "Built a custom Kubernetes scheduler and autoscaler (HTAS) leveraging CRDs and event-driven scaling for GKE clusters",
-      "Designed the Resource Profiler for dynamic workload characterization and Task Packer using BFD/TBFD bin-packing algorithms",
-      "Benchmarked performance through synthetic and real workloads, tuning placement heuristics for compute heterogeneity",
-    ],
-    highlights: [
-      "Achieved 28% cost reduction and 35% higher utilization compared to default GKE scheduler",
-      "Implemented fault-tolerant scheduling logic resilient to preemptible VM churn",
-      "Enabled per-pod telemetry collection with Prometheus for real-time scaling insight",
-    ],
+      "A custom Kubernetes scheduler and hybrid task autoscaler (HTAS) for GKE that packs microservices and batch jobs onto heterogeneous, preemptible VMs.",
+    duration: "Jan — Apr 2025",
+    location: "IIT Jodhpur",
+    roles: ["Cloud architect", "Systems engineer"],
+    tags: ["Kubernetes", "GCP", "Python", "Prometheus"],
+    lead: {
+      value: "↓28%",
+      label: "compute cost vs the default GKE scheduler",
+    },
     metrics: [
       {
-        label: "Cost reduction",
-        value: "↓ 28%",
-        description:
-          "Measured through comparative GCP billing analysis across identical workloads",
+        value: "↓28%",
+        label: "Compute cost",
+        description: "Comparative GCP billing across identical workloads",
       },
       {
-        label: "Utilization gain",
         value: "+35%",
-        description:
-          "Average CPU/memory efficiency improvement on test cluster",
+        label: "Utilisation",
+        description: "Average CPU and memory efficiency on the test cluster",
       },
       {
-        label: "Services orchestrated",
         value: "10+",
+        label: "Services orchestrated",
         description: "Microservices and batch workloads balanced across nodes",
       },
     ],
@@ -52,69 +44,63 @@ const projects: IProjectItem[] = [
         type: "github",
       },
       {
-        title: "Implemented Research Paper",
+        title: "Research paper implemented",
         url: "https://dl.acm.org/doi/abs/10.1145/3378447",
-        type: "live",
+        type: "paper",
       },
     ],
     context:
-      "High GKE costs from inefficient default scheduling motivated the need for custom orchestration tuned for mixed workloads and preemptible resources.",
+      "High GKE costs from inefficient default scheduling created the need for custom orchestration tuned for mixed workloads and preemptible resources.",
     approach:
-      "Devised a modular Kubernetes extension with CRDs and autoscaling logic driven by real-time resource profiling, integrating seamlessly with GCP’s managed cluster APIs.",
+      "A modular Kubernetes extension built on CRDs, with autoscaling driven by real-time resource profiling and integrated with GCP's managed cluster APIs.",
     impact:
-      "Delivered a cost-conscious orchestration platform demonstrating tangible infrastructure savings and improved utilization, informing future IITJ cloud infrastructure research.",
+      "A cost-conscious orchestration platform with measurable infrastructure savings and better utilisation, informing further cloud infrastructure research at IIT Jodhpur.",
+    responsibilities: [
+      "Built the scheduler and autoscaler (HTAS) on CRDs with event-driven scaling for GKE clusters.",
+      "Designed a Resource Profiler that characterises workloads, and a Task Packer that places them with BFD/TBFD bin-packing.",
+      "Benchmarked synthetic and real workloads, tuning placement heuristics for mixed VM sizes.",
+    ],
+    highlights: [
+      "28% lower cost and 35% higher utilisation than the default GKE scheduler.",
+      "Fault-tolerant scheduling that stays correct through preemptible VM churn.",
+      "Per-pod telemetry in Prometheus for real-time scaling decisions.",
+    ],
   },
   {
     id: "prometeo",
-    title: "Prometeo | IITJ TechFest Website",
+    title: "Prometeo, IIT Jodhpur's tech fest",
+    kind: "Team project",
+    repo: "public",
+    year: "2024",
+    note: "Live site",
     description:
-      "Optimized 3D models, improving performance and reducing loading time. Reduced server load with caching. Integrated payment processing system (Razorpay). Enhanced security with SSL and CSRF protection.",
-    icon: "/images/prometeo.jpg",
-    repoType: RepoType.Public,
-    projectType: ProjectType.TeamProject,
-    githubUrl: "https://github.com/Shivanshu-Verma/server-prometeo-25",
-    url: "https://prometeo.in/",
-    tags: ["Three.js", "Django", "Docker", "Redis", "AWS"],
+      "A 3D landing experience on a cached Django API, with Razorpay ticketing, deployed in containers on AWS.",
     summary:
-      "Led the relaunch of Prometeo, IIT Jodhpur's annual tech fest portal, creating an immersive 3D landing experience that remained performant for 25k+ visitors during ticketing peaks.",
-    duration: "Oct 2024 – Dec 2024",
-    location: "IIT Jodhpur, India",
-    roles: ["Full-stack Developer", "DevOps"],
-    responsibilities: [
-      "Refined Three.js scene composition and glTF optimisations to balance aesthetics with sub-2s LCP across broadband networks",
-      "Built stateless Django API layer with Redis caching and auto-scaling Docker deployment on AWS Fargate",
-      "Integrated Razorpay checkout flow with webhook validation, CSRF safeguards, and encrypted audit logs",
-    ],
-    highlights: [
-      "Cut hero scene payload by 38% via mesh decimation, texture compression, and route-level code splitting",
-      "Designed automated CloudFront cache invalidation ensuring fresh content within 60 seconds of CMS publish",
-      "Implemented real-time ticket inventory dashboard for core organizing team",
-    ],
+      "The relaunch of IIT Jodhpur's annual tech fest portal: an immersive 3D landing experience that stayed fast for 25k+ visitors through ticketing peaks.",
+    duration: "Oct — Dec 2024",
+    location: "IIT Jodhpur",
+    roles: ["Full-stack developer", "DevOps"],
+    tags: ["Django", "Redis", "Docker", "AWS", "Three.js"],
+    lead: { value: "25k+", label: "visitors at launch, zero payment failures" },
     metrics: [
       {
+        value: "↓42%",
         label: "Page load",
-        value: "↓ 42%",
-        description:
-          "LCP dropped from 3.8s to 2.2s after asset optimisation pipeline",
+        description: "LCP dropped from 3.8s to 2.2s after the asset pipeline",
       },
       {
-        label: "Traffic",
         value: "25k+",
-        description: "Unique visitors served over the three-day launch window",
+        label: "Visitors",
+        description: "Unique visitors over the three-day launch window",
       },
       {
-        label: "Support",
-        value: "0 incidents",
-        description:
-          "No downtime or payment failures recorded during registrations",
+        value: "0",
+        label: "Incidents",
+        description: "No downtime or payment failures during registrations",
       },
     ],
     links: [
-      {
-        title: "Live site",
-        url: "https://prometeo.in/",
-        type: "live",
-      },
+      { title: "Live site", url: "https://prometeo.in/", type: "live" },
       {
         title: "Server repository",
         url: "https://github.com/Shivanshu-Verma/server-prometeo-25",
@@ -122,100 +108,93 @@ const projects: IProjectItem[] = [
       },
     ],
     context:
-      "The organising team needed a visually striking web presence that could withstand sudden ticket sale surges without compromising security or UX.",
+      "The organising team needed a visually striking site that could take sudden ticket-sale surges without compromising security or UX.",
     approach:
       "Modernised the 3D experience with progressive loading, served content through a hardened Django API, and containerised the stack with CI-driven deployments.",
     impact:
-      "Delivered a resilient launch with stellar Core Web Vitals, higher conversion on passes, and positive feedback from attendees and sponsors.",
+      "A resilient launch with strong Core Web Vitals, better pass conversion, and positive feedback from attendees and sponsors.",
+    responsibilities: [
+      "Refined Three.js scene composition and glTF optimisation to keep LCP under 2s on broadband.",
+      "Built a stateless Django API with Redis caching and auto-scaling Docker deployment on AWS Fargate.",
+      "Integrated Razorpay checkout with webhook validation, CSRF safeguards and encrypted audit logs.",
+    ],
+    highlights: [
+      "Cut the hero scene payload by 38% with mesh decimation, texture compression and route-level code splitting.",
+      "Automated CloudFront cache invalidation so content was fresh within 60 seconds of publishing.",
+      "Real-time ticket inventory dashboard for the core organising team.",
+    ],
   },
   {
     id: "iitj-voting-app",
-    title: "IITJ Voting Electron App",
+    title: "IIT Jodhpur election system",
+    kind: "Team project",
+    repo: "private",
+    year: "2023",
+    note: "Private repo",
     description:
-      "Voting Portal to conduct Institute student representative elections for IITJ Community.",
-    icon: "/images/voting.png",
-    repoType: RepoType.Private,
-    projectType: ProjectType.TeamProject,
-    githubUrl: "https://github.com/Shivanshu-Verma/IITJ-Voting",
-    // url: "",
-    tags: ["React", "Django", "PostgreSQL", "Encryption", "Biometrics"],
+      "A kiosk voting app with signed, encrypted ballots, biometric and OTP verification, and tamper-evident audit logs.",
     summary:
-      "Delivered a kiosk-ready desktop voting application with encrypted ballot storage, biometric verification, and admin dashboards for the IITJ election committee.",
-    duration: "Aug 2023 – Oct 2023",
-    location: "IIT Jodhpur, India",
-    roles: ["Full-stack Engineer", "Security Lead"],
-    responsibilities: [
-      "Crafted cross-platform Electron shell with offline-first caching to support remote polling booths",
-      "Engineered Django REST services with cryptographic ballot signing and audit-ready event logs",
-      "Integrated Aadhaar-based biometric SDK and fallback OTP verification flow",
-    ],
-    highlights: [
-      "Digitised end-to-end voting flow reducing manual counting effort by 80%",
-      "Designed role-based access control for commissioners, poll officers, and observers",
-      "Implemented tamper detection that locked stations on suspicious state changes",
-    ],
+      "A kiosk-ready desktop voting application with encrypted ballot storage, biometric verification and admin dashboards for the IIT Jodhpur election committee.",
+    duration: "Aug — Oct 2023",
+    location: "IIT Jodhpur",
+    roles: ["Full-stack engineer", "Security lead"],
+    tags: ["Electron", "React", "Django", "PostgreSQL", "Cryptography"],
+    lead: { value: "2.1k", label: "ballots cast across 12 polling stations" },
     metrics: [
       {
-        label: "Ballots processed",
         value: "2.1k",
+        label: "Ballots processed",
         description: "Secure votes cast across 12 polling stations",
       },
       {
+        value: "<5s",
         label: "Verification",
-        value: "< 5s",
-        description: "Average biometric + OTP verification time",
+        description: "Average biometric and OTP verification time",
       },
     ],
-    links: [
-      {
-        title: "Source code (private-request access)",
-        url: "https://github.com/Shivanshu-Verma/IITJ-Voting",
-        type: "github",
-      },
-    ],
+    links: [],
     context:
-      "Manual paper-based elections were error-prone, slow, and vulnerable to manipulation.",
+      "Manual paper-based elections were error-prone, slow, and open to manipulation.",
     approach:
-      "Built a secure digital voting system with layered authentication, offline resilience, and transparent audit trails.",
+      "A secure digital voting system with layered authentication, offline resilience and transparent audit trails.",
     impact:
-      "Used successfully in the 2023 student body elections with no disputed ballots and rapid result publication.",
+      "Used in the 2023 student body elections with no disputed ballots and fast result publication.",
+    responsibilities: [
+      "Built a cross-platform Electron shell with offline-first caching for remote polling booths.",
+      "Engineered Django REST services with cryptographic ballot signing and audit-ready event logs.",
+      "Integrated an Aadhaar-based biometric SDK with a fallback OTP verification flow.",
+    ],
+    highlights: [
+      "Digitised the end-to-end voting flow, cutting manual counting effort by 80%.",
+      "Role-based access control for commissioners, poll officers and observers.",
+      "Tamper detection that locks a station on suspicious state changes.",
+    ],
   },
   {
     id: "virus-detection-system",
-    title: "Virus Detection System",
+    title: "Virus detection engine",
+    kind: "Coursework",
+    repo: "public",
+    year: "2023",
+    note: "Windows",
     description:
-      "Implemented a multi-threaded virus scanning system using SHA256 hashing techniques, comparing over 100,000 virus signatures per second. Integrated Microsoft Detours Library for real-time API hooking and process monitoring.",
-    icon: "/images/virus.png",
-    repoType: RepoType.Public,
-    projectType: ProjectType.CourseWork,
-    githubUrl:
-      "https://github.com/Shivanshu-Verma/Infectious-Virus-Detection-System",
-    //url: "",
-    tags: ["C/C++", "Microsoft Detours", "Network", "SHA256"],
+      "Multi-threaded SHA-256 signature scanning plus Win32 API hooking with Microsoft Detours to watch processes live.",
     summary:
-      "Prototyped a Windows-native malware detection engine featuring signature scanning, heuristic analysis, and quarantining for suspicious processes.",
-    duration: "Jan 2023 – Apr 2023",
-    location: "IIT Jodhpur, India",
-    roles: ["Systems Programmer"],
-    responsibilities: [
-      "Developed multi-threaded scanning core leveraging memory-mapped files for signature throughput",
-      "Hooked critical Win32 APIs using Microsoft Detours to observe file and registry operations in real time",
-      "Authored heuristic scoring and quarantine workflow with CLI reporting dashboard",
-    ],
-    highlights: [
-      "Reached 120k signature comparisons per second on benchmark dataset",
-      "Implemented sandbox simulator that replayed malware behaviour for detection tuning",
-      "Built exportable incident reports for security teams",
-    ],
+      "A Windows-native malware detection prototype with signature scanning, heuristic analysis and quarantine for suspicious processes.",
+    duration: "Jan — Apr 2023",
+    location: "IIT Jodhpur",
+    roles: ["Systems programmer"],
+    tags: ["C/C++", "Microsoft Detours", "SHA-256", "Win32"],
+    lead: { value: "96%", label: "detection rate, under 1% false positives" },
     metrics: [
       {
-        label: "Detection rate",
         value: "96%",
-        description: "On curated virus corpus during evaluation",
+        label: "Detection rate",
+        description: "On a curated virus corpus during evaluation",
       },
       {
+        value: "<1%",
         label: "False positives",
-        value: "< 1%",
         description: "After heuristic tuning and whitelist support",
       },
     ],
@@ -227,28 +206,26 @@ const projects: IProjectItem[] = [
       },
     ],
     context:
-      "Needed a performant detection prototype to explore real-time malware interception without access to enterprise antiviruses.",
+      "A fast detection prototype to explore real-time malware interception without access to enterprise antivirus tooling.",
     approach:
-      "Combined hash-based scanning with API hooking, enabling rapid signature checks alongside behavioural heuristics.",
+      "Hash-based scanning combined with API hooking, so signature checks run alongside behavioural heuristics.",
     impact:
-      "Demonstrated reliable detection in academic evaluations and provided a foundation for further research.",
+      "Reliable detection in academic evaluation and a foundation for further research.",
+    responsibilities: [
+      "Developed a multi-threaded scanning core using memory-mapped files for signature throughput.",
+      "Hooked critical Win32 APIs with Microsoft Detours to observe file and registry operations in real time.",
+      "Wrote the heuristic scoring and quarantine workflow with a CLI reporting dashboard.",
+    ],
+    highlights: [
+      "120k signature comparisons per second on the benchmark dataset.",
+      "A sandbox simulator that replays malware behaviour for detection tuning.",
+      "Exportable incident reports for security teams.",
+    ],
   },
 ];
 
 export default projects;
 
-export function getProjectName(id: string) {
-  const item = projects.find((e) => e.id === id);
-
-  if (!item) return null;
-
-  return item.title;
-}
-
-export function getProjectDetails(id: string): IProjectItem | null {
-  const item = projects.find((e) => e.id === id);
-
-  if (!item) return null;
-
-  return item;
+export function getProject(id: string): IProjectItem | undefined {
+  return projects.find((project) => project.id === id);
 }

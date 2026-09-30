@@ -1,210 +1,114 @@
-import "./globals.scss";
-import { Poppins } from "next/font/google";
-import { ReactNode } from "react";
-import { Metadata, Viewport } from "next";
-import Script from "next/script";
-import LocalConfig from "@/constants/config";
-import Strings from "@/constants/strings";
-import { WebVitals } from "@/components/common/WebVitals";
+import "./globals.css";
+import type { ReactNode } from "react";
+import type { Metadata, Viewport } from "next";
+import { GeistMono } from "geist/font/mono";
+import { GeistSans } from "geist/font/sans";
+import { GoogleAnalytics } from "@next/third-parties/google";
+import SiteFooter from "@/components/layout/SiteFooter";
+import SiteHeader from "@/components/layout/SiteHeader";
+import { posts } from "@/lib/posts";
+import { absoluteUrl, site } from "@/lib/site";
 
-const poppins = Poppins({
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-  style: ["normal", "italic"],
-  subsets: ["latin", "latin-ext"],
-  display: "swap",
-  preload: true,
-  fallback: [
-    "system-ui",
-    "arial",
-    "BlinkMacSystemFont",
-    "Segoe UI",
-    "Roboto",
-    "Oxygen",
-    "Ubuntu",
-    "Fira Sans",
-    "Droid Sans",
-  ],
-});
-
-const rawSiteUrl = LocalConfig.values.NEXT_PUBLIC_SITE_URL;
-const siteUrl = rawSiteUrl.startsWith("http")
-  ? rawSiteUrl
-  : `https://${rawSiteUrl.replace(/^https?:\/\//, "")}`;
-const normalizedBase = siteUrl.replace(/\/$/, "");
-const primaryEmail = LocalConfig.values.NEXT_PUBLIC_PRIMARY_EMAIL;
-const primaryLocation = LocalConfig.values.NEXT_PUBLIC_PRIMARY_LOCATION;
-const primaryCollege = LocalConfig.values.NEXT_PUBLIC_PRIMARY_COLLEGE;
-const gtagId = LocalConfig.values.NEXT_PUBLIC_GTAG_ID;
-
-const defaultOgImage = `${normalizedBase}/opengraph-image`;
-const defaultTwitterImage = `${normalizedBase}/twitter-image`;
-
-const sameAsProfiles = [
-  Strings.githubLink,
-  Strings.linkedInLink,
-  Strings.twitterLink,
-  Strings.telegramLink,
-  Strings.instagramLink,
-  Strings.primaryEmailLink,
-  normalizedBase,
-];
+// Runs before first paint so a saved light theme never flashes dark (Next "preventing flash" guide).
+const themeScript = `(function(){try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)}catch(e){}})()`;
 
 const structuredData = [
   {
     "@context": "https://schema.org",
     "@type": "Person",
-    name: Strings.fullName,
-    alternateName: [Strings.shortName, "Shivanshu V"],
-    description:
-      "Software engineer, full stack developer, and cybersecurity enthusiast building secure, scalable products and leading student communities.",
-    url: siteUrl,
-    "@id": `${normalizedBase}#person`,
-    image: `${normalizedBase}/icon.svg`,
-    jobTitle: "Software Engineer & Cybersecurity Enthusiast",
-    worksFor: [
-      {
-        "@type": "Organization",
-        name: "DevlUp Labs",
-        sameAs: "https://devluplabs.tech/",
-      },
-    ],
-    memberOf: [
-      {
-        "@type": "Organization",
-        name: "Google Developer Student Clubs",
-        sameAs: "https://developers.google.com/community/gdsc",
-      },
-    ],
+    "@id": absoluteUrl("/#person"),
+    name: site.name,
+    alternateName: site.handle,
+    url: site.url,
+    image: absoluteUrl("/icon.svg"),
+    jobTitle: site.jobTitle,
+    worksFor: {
+      "@type": "Organization",
+      name: site.company.name,
+      sameAs: site.company.url,
+    },
     alumniOf: {
       "@type": "CollegeOrUniversity",
-      name: primaryCollege,
+      name: site.college,
       sameAs: "https://iitj.ac.in/",
     },
-    email: primaryEmail,
-    sameAs: sameAsProfiles,
-    knowsAbout: [
-      "Full Stack Development",
-      "Cybersecurity",
-      "DevSecOps",
-      "Cloud Computing",
-      "Reverse Engineering",
+    email: site.email,
+    sameAs: [
+      site.links.github,
+      site.links.linkedin,
+      site.links.x,
+      site.links.instagram,
     ],
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: primaryLocation,
-      addressCountry: "IN",
-    },
-    contactPoint: {
-      "@type": "ContactPoint",
-      contactType: "Business",
-      email: primaryEmail,
-      telephone: Strings.primaryPhone,
-      availableLanguage: ["English", "Hindi"],
-      url: `${normalizedBase}/#contact`,
-    },
+    knowsAbout: [
+      "Backend engineering",
+      "Distributed systems",
+      "Cloud infrastructure",
+      "Kubernetes",
+      "Cybersecurity",
+    ],
   },
   {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "@id": `${normalizedBase}#website`,
-    url: siteUrl,
-    name: `${Strings.fullName} Portfolio`,
-    description:
-      "Explore the portfolio, engineering work, cybersecurity projects, and publications of Shivanshu Verma from IIT Jodhpur.",
+    "@id": absoluteUrl("/#website"),
+    url: site.url,
+    name: site.name,
+    description: site.description,
     inLanguage: "en",
-    publisher: {
-      "@id": `${normalizedBase}#person`,
-    },
-    potentialAction: [
-      {
-        "@type": "ContactAction",
-        target: `${normalizedBase}/#contact`,
-        name: "Start a collaboration with Shivanshu Verma",
-      },
-    ],
+    publisher: { "@id": absoluteUrl("/#person") },
   },
 ];
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
-  referrer: "origin-when-cross-origin",
-  title: {
-    default: `${Strings.fullName} | Portfolio` as string,
-    template: `%s | ${Strings.fullName}`,
-  },
-  description:
-    "Discover Shivanshu Verma—software engineer, full stack developer, and cybersecurity enthusiast from IIT Jodhpur. Explore experiences, projects, skills, publications, and ways to collaborate.",
-  applicationName: `${Strings.fullName} Portfolio`,
+  metadataBase: new URL(site.url),
+  title: { default: site.title, template: `%s · ${site.name}` },
+  description: site.description,
+  applicationName: site.name,
+  authors: [{ name: site.name, url: site.url }],
+  creator: site.name,
+  publisher: site.name,
   category: "Technology",
-  generator: "Next.js 14",
-  authors: [{ name: Strings.fullName, url: siteUrl }],
-  creator: Strings.fullName,
-  publisher: Strings.fullName,
   keywords: [
     "Shivanshu Verma",
-    "Shivanshu",
     "ShivanshuV_",
-    "Shivanshu-Verma",
+    "Backend engineer",
+    "Software engineer",
+    "DoubleTick",
     "IIT Jodhpur",
-    "Indian Institute of Technology Jodhpur",
-    "Software Engineer",
-    "Full Stack Developer",
-    "Cybersecurity Enthusiast",
-    "DevSecOps",
-    "MERN Stack",
-    "Cloud Security",
-    "Open Source Contributor",
-    "Tech Speaker",
-    "Student Developer",
+    "Node.js",
+    "NestJS",
+    "Kubernetes",
+    "Cybersecurity",
   ],
-  formatDetection: {
-    telephone: false,
-    address: true,
-    email: false,
-  },
+  formatDetection: { telephone: false, email: false },
   openGraph: {
-    title: `${Strings.fullName} | Software Engineer & Cybersecurity Enthusiast`,
-    description:
-      "Portfolio of Shivanshu Verma, a software engineer and cybersecurity enthusiast from IIT Jodhpur. Explore projects, speaking, and consulting work.",
-    url: siteUrl,
-    siteName: `${Strings.fullName} Portfolio`,
+    title: site.title,
+    description: site.description,
+    url: site.url,
+    siteName: site.name,
     locale: "en_IN",
     type: "profile",
-    images: [
-      {
-        url: defaultOgImage,
-        width: 1200,
-        height: 630,
-        alt: `${Strings.fullName} portfolio preview banner`,
-      },
-    ],
     firstName: "Shivanshu",
     lastName: "Verma",
-    username: Strings.shortName,
+    username: site.handle,
     gender: "male",
-    emails: [primaryEmail],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${Strings.fullName} | Software Engineer & Cybersecurity Enthusiast`,
-    description:
-      "Hi, I'm Shivanshu Verma—full stack developer and cybersecurity enthusiast from IIT Jodhpur. Check out my work and connect with me.",
-    creator: "@ShivanshuV_",
-    site: "@ShivanshuV_",
-    images: [defaultTwitterImage],
+    title: site.title,
+    description: site.description,
+    creator: `@${site.handle}`,
+    site: `@${site.handle}`,
   },
-  alternates: {
-    canonical: siteUrl,
-    languages: {
-      "en-US": `${siteUrl}/`,
-      "en-IN": `${siteUrl}/`,
-    },
-  },
-  appLinks: {
-    web: {
-      url: siteUrl,
-    },
-  },
+  alternates: posts.length
+    ? {
+        types: {
+          "application/rss+xml": [
+            { url: "/rss.xml", title: `${site.name} · Writing` },
+          ],
+        },
+      }
+    : undefined,
   robots: {
     index: true,
     follow: true,
@@ -216,92 +120,44 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  verification: {
-    google: "4cVXJt04ZBVCuqNFDQA8VeR4JADAVKgP0u1QtK5tNyM",
-  },
-  icons: {
-    icon: [
-      {
-        url: "/icon.svg",
-        rel: "icon",
-        type: "image/svg+xml",
-        sizes: "any",
-      },
-    ],
-    apple: [
-      {
-        url: "/images/Devops.jpeg",
-        sizes: "180x180",
-        type: "image/jpeg",
-      },
-    ],
-    shortcut: ["/icon.svg"],
-  },
-  manifest: "/site.webmanifest",
-  colorScheme: "dark light",
-  themeColor: [{ media: "(prefers-color-scheme: dark)", color: "#050505" }],
-  other: {
-    "msapplication-TileColor": "#050505",
-  },
+  verification: { google: "4cVXJt04ZBVCuqNFDQA8VeR4JADAVKgP0u1QtK5tNyM" },
 };
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  maximumScale: 5,
-  themeColor: "#050505",
+  themeColor: "#0a0a0b",
 };
 
-const RootLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
-  return (
-    <html lang="en" className={poppins.className}>
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link rel="preconnect" href="https://www.googletagmanager.com" />
-        <Script
-          id="structured-data"
-          type="application/ld+json"
-          strategy="beforeInteractive"
-        >
-          {JSON.stringify(structuredData)}
-        </Script>
-
-        {gtagId ? (
-          <>
-            <Script
-              async
-              src={`https://www.googletagmanager.com/gtag/js?id=${gtagId}`}
-              strategy="afterInteractive"
-            />
-            <Script id="google-analytics" strategy="afterInteractive">
-              {`
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', '${gtagId}', {
-                  page_path: window.location.pathname,
-                });
-              `}
-            </Script>
-          </>
-        ) : null}
-      </head>
-
-      <body
-        className={
-          process.env.NODE_ENV === "development" ? "debug-screens" : ""
-        }
+const RootLayout = ({ children }: Readonly<{ children: ReactNode }>) => (
+  <html
+    lang="en"
+    data-theme="dark"
+    className={`${GeistSans.variable} ${GeistMono.variable}`}
+    suppressHydrationWarning
+  >
+    <head>
+      <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+    </head>
+    <body>
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-lg focus:bg-foreground focus:px-4 focus:py-2.5 focus:text-sm focus:font-medium focus:text-background"
       >
-        {process.env.NODE_ENV === "development" ? <WebVitals /> : null}
-        <main>{children}</main>
-      </body>
-    </html>
-  );
-};
+        Skip to content
+      </a>
+      <SiteHeader />
+      <main id="main" tabIndex={-1} className="rails outline-none">
+        {children}
+      </main>
+      <SiteFooter />
+    </body>
+    {site.gaId ? <GoogleAnalytics gaId={site.gaId} /> : null}
+  </html>
+);
 
 export default RootLayout;

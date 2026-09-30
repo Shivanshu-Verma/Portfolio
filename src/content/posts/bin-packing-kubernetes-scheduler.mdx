@@ -1,0 +1,49 @@
+---
+title: "Bin-packing pods: building a cheaper Kubernetes scheduler"
+summary: "Why the default scheduler over-provisions, and how best-fit decreasing packing cut compute cost by 28%."
+date: "2026-10-01"
+tag: Infra
+draft: true
+---
+
+On our test cluster, most of the GKE bill paid for idle capacity. Replacing the scheduler's placement logic with bin-packing cut compute cost by 28%.
+
+## Why spreading costs money
+
+The default scheduler scores nodes to spread load. That is the right call for availability, but on a cluster of mixed VM sizes it leaves every node partly empty, and the autoscaler keeps all of them alive.
+
+## Packing instead of spreading
+
+HTAS, the hybrid task autoscaler we built for a cloud computing course at IIT Jodhpur, splits the job in two. A resource profiler learns what each workload actually uses. A task packer then places pods with best-fit decreasing: largest requests first, each on the node it fills most tightly.
+
+```python title="scheduler/packing.py"
+def best_fit_decreasing(pods, nodes):
+    """Place each pod on the node it fills most tightly."""
+    placement = {}
+    for pod in sorted(pods, key=lambda p: p.cpu, reverse=True):
+        fits = [n for n in nodes
+                if n.free_cpu >= pod.cpu and n.free_mem >= pod.mem]
+        if not fits:
+            placement[pod.name] = None  # no room: ask the autoscaler for a node
+            continue
+        node = min(fits, key=lambda n: n.free_cpu - pod.cpu)
+        node.free_cpu -= pod.cpu
+        node.free_mem -= pod.mem
+        placement[pod.name] = node.name
+    return placement
+```
+
+<Callout>
+  **Preemptible VMs can be reclaimed at any moment,** so the scheduler had to
+  stay correct through node churn, not just pack tightly.
+</Callout>
+
+## Results
+
+Measured by comparing GCP billing for identical workloads on both schedulers:
+
+| Metric                     | HTAS vs default |
+| -------------------------- | --------------: |
+| Compute cost               |            −28% |
+| CPU and memory utilisation |            +35% |
+| Services orchestrated      |             10+ |

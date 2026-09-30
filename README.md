@@ -1,112 +1,111 @@
-# Portfolio Project
+# shivanshu.site
 
-Welcome to my portfolio project! This repository showcases my skills and projects as a software engineer and developer. Below, you'll find detailed information about the tools and technologies used, features, and how to get started.
+Personal site of Shivanshu Verma: projects, experience and writing. A typographic,
+content-first design ("engineer's notebook") with light and dark themes and an MDX blog.
 
-## Table of Contents
+## Stack
 
-- [About](#about)
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
-- [Contact](#contact)
+- **Next.js 16** (App Router, Turbopack) and **React 19**; every route is prerendered
+- **Tailwind CSS 4**, with design tokens as CSS variables in `src/app/globals.css`
+- **Geist Sans + Geist Mono** via the `geist` package
+- **content-collections** + MDX for posts, **rehype-pretty-code / Shiki** for code highlighting
+- **lucide-react** for UI icons; inline SVG brand marks
+- `next/og` social images for the site, every project and every post
+- ESLint 9 (flat config) and Prettier (with `prettier-plugin-tailwindcss`)
 
-## About
+## Getting started
 
-This portfolio project is designed to highlight my expertise in both front-end and back-end development, as well as my interest in cybersecurity. It includes various sections such as my experiences, skills, projects, and ways to get in touch.
+Requires Node 24 (see `.nvmrc`) and pnpm, which Corepack pins from `package.json`.
 
-## Features
+```bash
+corepack enable
+pnpm install
+cp .env.sample .env.local   # optional, see below
+pnpm dev                    # http://localhost:3000
+```
 
-- **Responsive Design**: Optimized for various screen sizes and devices.
-- **Dynamic Content**: Uses Next.js for server-side rendering and dynamic content loading.
-- **Interactive UI**: Includes animations and interactive elements for a better user experience.
-- **SEO Optimized**: Metadata and SEO best practices implemented.
-- **Analytics**: Integrated with Google Analytics for tracking and insights.
+| Script              | What it does                           |
+| ------------------- | -------------------------------------- |
+| `pnpm dev`          | Dev server; draft posts are visible    |
+| `pnpm build`        | Production build; drafts are excluded  |
+| `pnpm start`        | Serve the production build             |
+| `pnpm lint`         | ESLint                                 |
+| `pnpm typecheck`    | `tsc --noEmit`                         |
+| `pnpm format`       | Prettier (also sorts Tailwind classes) |
+| `pnpm format:check` | Prettier in check mode                 |
 
-## Tech Stack
+## Environment variables
 
-### Frontend
+All optional. The site builds and runs without any of them.
 
-- **React.js**: A JavaScript library for building user interfaces.
-- **Next.js**: A React framework for server-side rendering and static site generation.
-- **Tailwind CSS**: A utility-first CSS framework for rapid UI development.
-- **Framer Motion**: A library for animations and gestures in React.
+| Variable                  | Effect when set                          | When unset                |
+| ------------------------- | ---------------------------------------- | ------------------------- |
+| `NEXT_PUBLIC_SITE_URL`    | Canonical URL for metadata, sitemap, RSS | `https://shivanshu.site`  |
+| `NEXT_PUBLIC_RESUME_LINK` | Shows the Résumé buttons                 | Résumé buttons are hidden |
+| `NEXT_PUBLIC_GTAG_ID`     | Loads Google Analytics                   | No analytics script       |
 
-### Backend
+## Editing content
 
-- **Node.js**: A JavaScript runtime built on Chrome's V8 JavaScript engine.
-- **Express.js**: A minimal and flexible Node.js web application framework.
-- **Django**: A high-level Python web framework for rapid development.
-- **PostgreSQL**: A powerful, open-source object-relational database system.
+| What                                  | Where                     |
+| ------------------------------------- | ------------------------- |
+| Name, links, SEO description, env use | `src/lib/site.ts`         |
+| Hero, about, education, recognition   | `src/data/profile.ts`     |
+| Projects and case studies             | `src/data/projects.ts`    |
+| Experience timeline                   | `src/data/experience.ts`  |
+| Stack groups                          | `src/data/stack.ts`       |
+| Blog posts                            | `src/content/posts/*.mdx` |
 
-### DevOps
+Optional fields (such as an experience `start`/`end` or `summary`, or education `degree`/`year`)
+are simply not rendered when missing.
 
-- **Docker**: A platform for developing, shipping, and running applications in containers.
-- **AWS**: Amazon Web Services for cloud computing and hosting.
-- **Jenkins**: An open-source automation server for continuous integration and delivery.
-- **SonarQube**: A tool for continuous inspection of code quality.
+### Writing a post
 
-### Cybersecurity Tools
+Create `src/content/posts/<slug>.mdx`:
 
-- **Wireshark**: A network protocol analyzer.
-- **Burp Suite**: A tool for web application security testing.
-- **Ghidra**: A software reverse engineering framework.
+````mdx
+---
+title: "Post title"
+summary: "One or two sentences shown in lists and previews."
+date: "2026-10-01"
+tag: Backend # Backend | Infra | Security
+draft: false
+---
 
-## Installation
+Opening paragraph (styled as the standfirst).
 
-To get started with this project, follow these steps:
+## A section heading
 
-1. **Clone the repository**:
+Fenced code takes an optional title: ```ts title="src/example.ts"
 
-   ```bash
-   git clone https://github.com/your-username/portfolio.git
-   cd portfolio
-   ```
+<Callout>A highlighted note.</Callout>
+````
 
-2. **Install dependencies**:
+Drafts (`draft: true`) appear in `pnpm dev` only. The Writing page, the home-page section, the
+nav link, RSS (`/rss.xml`) and the sitemap entries appear automatically once at least one post
+is published.
 
-   ```bash
-   npm install
-   ```
+## Project structure
 
-3. **Run the development server**:
+```
+content-collections.ts    MDX collection: schema, highlighting, reading time, headings
+src/
+  app/                    routes, metadata, OG images, sitemap, robots, RSS, manifest
+  components/
+    common/               Section, ButtonLink, brand icons
+    layout/               header, nav, theme toggle, footer
+    home/                 home-page sections
+    writing/  post/       blog list, table of contents, copy button, MDX components
+  content/posts/          blog posts (MDX)
+  data/                   typed site content
+  lib/                    site config, posts helpers, OG renderer, utilities
+```
 
-   ```bash
-   npm run dev
-   ```
+## Deployment
 
-4. **Open your browser** and navigate to `http://localhost:3000`.
-
-## Usage
-
-- **Development**: Use `npm run dev` to start the development server.
-- **Build**: Use `npm run build` to build the project for production.
-- **Start**: Use `npm run start` to start the production server.
-- **Lint**: Use `npm run lint` to run ESLint and fix code issues.
-
-## Contributing
-
-Contributions are welcome! Please follow these steps to contribute:
-
-1. Fork the repository.
-2. Create a new branch (`git checkout -b feature-branch`).
-3. Make your changes.
-4. Commit your changes (`git commit -m 'Add some feature'`).
-5. Push to the branch (`git push origin feature-branch`).
-6. Open a pull request.
+Deployed on Vercel. Vercel doesn't natively support pnpm 11 yet, so set
+`ENABLE_EXPERIMENTAL_COREPACK=1` (Production and Preview) so it uses the version pinned in
+`packageManager`. The build log should show that pnpm version.
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
-
-## Contact
-
-Feel free to reach out if you have any questions or suggestions:
-
-- **Email**: [v2.shivanshu@gmail.com](mailto:v2.shivanshu@gmail.com)
-- **LinkedIn**: [Shivanshu Verma](https://www.linkedin.com/in/verma-shivanshu)
-- **GitHub**: [Shivanshu-Verma](https://github.com/Shivanshu-Verma)
-
-Thank you for visiting my portfolio project!
+[MIT](./LICENSE)

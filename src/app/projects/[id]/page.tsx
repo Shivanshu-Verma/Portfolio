@@ -1,63 +1,16 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
-import Image from "next/image";
 import Link from "next/link";
-import Balancer from "react-wrap-balancer";
-
-import LocalConfig from "@/constants/config";
-import Strings from "@/constants/strings";
-import projects, { getProjectDetails } from "@/data/projects";
-import PageBox from "@/components/core/PageBox";
-import Column from "@/components/core/Column";
-import Row from "@/components/core/Row";
-import GridBox from "@/components/core/GridBox";
-import SectionTitle from "@/components/common/SectionTitle";
+import { notFound } from "next/navigation";
+import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
+import { GitHubIcon } from "@/components/common/BrandIcons";
+import ButtonLink from "@/components/common/ButtonLink";
+import projects, { getProject } from "@/data/projects";
+import { absoluteUrl, site } from "@/lib/site";
 import type { IProjectItem } from "@/types";
-import { ProjectType, RepoType } from "@/types";
 
-const getBaseUrl = () => {
-  const raw = LocalConfig.values.NEXT_PUBLIC_SITE_URL;
+type ProjectPageProps = { params: Promise<{ id: string }> };
 
-  if (!raw) {
-    return "https://shivanshu.site";
-  }
-
-  return raw.startsWith("http")
-    ? raw.replace(/\/$/, "")
-    : `https://${raw.replace(/^https?:\/\//, "").replace(/\/$/, "")}`;
-};
-
-const buildImageUrl = (path: string | undefined, baseUrl: string) => {
-  if (!path) {
-    return `${baseUrl}/icon.svg`;
-  }
-
-  if (path.startsWith("http")) {
-    return path;
-  }
-
-  return `${baseUrl}${path}`;
-};
-
-const formatRepoLabel = (repoType: RepoType) =>
-  repoType === RepoType.Public ? "Public repository" : "Private repository";
-
-const formatProjectType = (projectType?: ProjectType) => {
-  switch (projectType) {
-    case ProjectType.Personal:
-      return "Personal project";
-    case ProjectType.TeamProject:
-      return "Team project";
-    case ProjectType.CourseWork:
-      return "Coursework";
-    default:
-      return undefined;
-  }
-};
-
-type ProjectPageProps = {
-  params: { id: string };
-};
+export const dynamicParams = false;
 
 export function generateStaticParams() {
   return projects.map((project) => ({ id: project.id }));
@@ -66,389 +19,261 @@ export function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: ProjectPageProps): Promise<Metadata> {
-  const project = getProjectDetails(params.id);
+  const project = getProject((await params).id);
+  if (!project) return {};
 
-  if (!project) {
-    return {
-      title: "Project not found | Shivanshu Verma",
-    };
-  }
-
-  const baseUrl = getBaseUrl();
-  const pageUrl = `${baseUrl}/projects/${project.id}`;
-  const imageUrl = buildImageUrl(
-    project.screenshots?.[0] ?? project.icon,
-    baseUrl
-  );
-  const description = project.summary ?? project.description;
-
+  const path = `/projects/${project.id}`;
   return {
-    title: `${project.title} Project Overview | ${Strings.fullName}`,
-    description,
-    alternates: {
-      canonical: pageUrl,
-    },
+    title: project.title,
+    description: project.summary,
     keywords: project.tags,
+    alternates: { canonical: path },
     openGraph: {
-      title: `${project.title} · Project Overview`,
-      description,
-      url: pageUrl,
       type: "article",
-      siteName: Strings.fullName,
-      images: [
-        {
-          url: imageUrl,
-          width: 1200,
-          height: 630,
-          alt: `${project.title} preview`,
-        },
-      ],
+      title: project.title,
+      description: project.summary,
+      url: path,
+      siteName: site.name,
     },
     twitter: {
       card: "summary_large_image",
-      title: `${project.title} · Project Overview`,
-      description,
-      creator: Strings.shortName,
-      images: [imageUrl],
+      title: project.title,
+      description: project.summary,
+      creator: `@${site.handle}`,
     },
-    category: formatProjectType(project.projectType),
   };
 }
 
-const buildProjectJsonLd = (
-  project: IProjectItem,
-  pageUrl: string,
-  imageUrl: string
-) => {
-  const projectType =
-    formatProjectType(project.projectType) ?? "Digital project";
-
-  const projectSchema = {
-    "@context": "https://schema.org",
-    "@type": "CreativeWork",
-    name: project.title,
-    description: project.summary ?? project.description,
-    url: pageUrl,
-    image: imageUrl,
-    keywords: project.tags,
-    inLanguage: "en",
-    locationCreated: project.location,
-    genre: projectType,
-    contributor: project.roles?.map((role) => ({
-      "@type": "Person",
-      name: Strings.fullName,
-      jobTitle: role,
-    })),
-    creator: {
-      "@type": "Person",
-      name: Strings.fullName,
+const buildJsonLd = (project: IProjectItem) => {
+  const url = absoluteUrl(`/projects/${project.id}`);
+  return [
+    {
+      "@context": "https://schema.org",
+      "@type": "CreativeWork",
+      name: project.title,
+      description: project.summary,
+      url,
+      image: absoluteUrl(`/projects/${project.id}/opengraph-image`),
+      keywords: project.tags,
+      genre: project.kind,
+      creator: { "@id": absoluteUrl("/#person") },
     },
-  };
-
-  const breadcrumbSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Home",
-        item: pageUrl.replace(/\/projects\/.*$/, "/"),
-      },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: "Projects",
-        item: `${pageUrl.replace(/\/projects\/.*$/, "")}/#projects`,
-      },
-      {
-        "@type": "ListItem",
-        position: 3,
-        name: project.title,
-        item: pageUrl,
-      },
-    ],
-  };
-
-  return [projectSchema, breadcrumbSchema];
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: absoluteUrl("/"),
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Work",
+          item: absoluteUrl("/#work"),
+        },
+        { "@type": "ListItem", position: 3, name: project.title, item: url },
+      ],
+    },
+  ];
 };
 
-const ProjectPage = ({ params }: ProjectPageProps) => {
-  const project = getProjectDetails(params.id);
+const factLabel = "font-mono text-xs tracking-[0.06em] text-faint uppercase";
 
-  if (!project) {
-    notFound();
-  }
-
-  const baseUrl = getBaseUrl();
-  const pageUrl = `${baseUrl}/projects/${project.id}`;
-  const imageUrl = buildImageUrl(
-    project.screenshots?.[0] ?? project.icon,
-    baseUrl
+const Narrative = ({
+  index,
+  title,
+  text,
+  bullets,
+}: {
+  index: string;
+  title: string;
+  text: string;
+  bullets: string[];
+}) => {
+  const id = title.toLowerCase();
+  return (
+    <section aria-labelledby={id} className="flex flex-col gap-3">
+      <h2
+        id={id}
+        className="flex items-baseline gap-3 text-[22px] font-semibold tracking-[-0.02em]"
+      >
+        <span className="font-mono text-[13px] font-normal text-faint">
+          {index}
+        </span>
+        {title}
+      </h2>
+      <p className="text-[17px] leading-[1.75] text-muted">{text}</p>
+      {bullets.length ? (
+        <ul className="mt-1 flex flex-col gap-2.5 text-base leading-[1.65]">
+          {bullets.map((bullet) => (
+            <li key={bullet} className="flex gap-3">
+              <span
+                className="mt-2.5 size-1.5 shrink-0 rounded-full bg-accent"
+                aria-hidden
+              />
+              {bullet}
+            </li>
+          ))}
+        </ul>
+      ) : null}
+    </section>
   );
-  const schema = buildProjectJsonLd(project, pageUrl, imageUrl);
+};
 
-  const repoLabel = formatRepoLabel(project.repoType);
-  const projectTypeLabel = formatProjectType(project.projectType);
+const ProjectPage = async ({ params }: ProjectPageProps) => {
+  const project = getProject((await params).id);
+  if (!project) notFound();
+
+  const position = projects.indexOf(project);
+  const next = projects[(position + 1) % projects.length];
+  const facts = [
+    { label: "Role", value: project.roles.join(", ") },
+    { label: "Timeline", value: project.duration },
+    {
+      label: "Type",
+      value: `${project.kind}, ${project.repo === "private" ? "private" : "public"} repo`,
+    },
+    { label: "Stack", value: project.tags.join(", ") },
+  ];
 
   return (
-    <PageBox classNames="bg-[var(--backgroundColor)] py-16 md:py-24">
-      <main
-        className="w-full max-w-6xl mx-auto px-4 md:px-6 flex flex-col gap-16"
-        aria-labelledby="project-hero-title"
-      >
-        <nav aria-label="Breadcrumb">
-          <ol className="flex flex-wrap items-center gap-2 text-sm/6 text-[var(--textColorLight)]">
-            <li>
-              <Link href="/" className="hover:text-[var(--primaryColor)]">
-                Home
-              </Link>
-            </li>
-            <li aria-hidden="true">/</li>
-            <li>
-              <Link
-                href="/#projects"
-                className="hover:text-[var(--primaryColor)]"
-              >
-                Projects
-              </Link>
-            </li>
-            <li aria-hidden="true">/</li>
-            <li className="font-medium text-[var(--textColor)]">
-              {project.title}
-            </li>
-          </ol>
-        </nav>
-
-        <header className="flex flex-col gap-8">
-          <Row classNames="items-center gap-6">
-            <div className="relative w-20 h-20 overflow-hidden rounded-2xl border border-[var(--textColor20)] bg-[var(--textColor10)]">
-              <Image
-                src={project.icon}
-                alt={`${project.title} logo`}
-                fill
-                sizes="160px"
-                className="object-cover"
-                priority
-              />
-            </div>
-            <Column classNames="gap-3">
-              <h1
-                id="project-hero-title"
-                className="text-3xl/9 md:text-4xl/10 font-bold tracking-tight"
-              >
-                {project.title}
-              </h1>
-              <p className="text-base/7 md:text-lg/8 text-[var(--textColorLight)] max-w-3xl">
-                <Balancer>{project.summary ?? project.description}</Balancer>
-              </p>
-            </Column>
-          </Row>
-
-          <Row classNames="items-center flex-wrap gap-3 text-sm/6 text-[var(--textColorLight)]">
-            {projectTypeLabel ? (
-              <span className="rounded-full border border-[var(--textColor20)] px-3 py-1">
-                {projectTypeLabel}
-              </span>
-            ) : null}
-            <span className="rounded-full border border-[var(--textColor20)] px-3 py-1">
-              {repoLabel}
+    <>
+      <article aria-labelledby="project-title">
+        <header className="flex rise-in flex-col gap-[22px] gutter pt-[clamp(40px,6vw,72px)] pb-12">
+          <nav
+            aria-label="Breadcrumb"
+            className="font-mono text-[13px] text-faint"
+          >
+            <Link
+              href="/#work"
+              className="text-muted underline decoration-line underline-offset-4 hover:text-foreground hover:decoration-accent"
+            >
+              Work
+            </Link>
+            <span aria-hidden className="px-2">
+              /
             </span>
-            {project.duration ? (
-              <span className="rounded-full border border-[var(--textColor20)] px-3 py-1">
-                {project.duration}
-              </span>
-            ) : null}
-            {project.location ? (
-              <span className="rounded-full border border-[var(--textColor20)] px-3 py-1">
-                {project.location}
-              </span>
-            ) : null}
-          </Row>
-
-          {project.links && project.links.length > 0 ? (
-            <Row classNames="items-center gap-3 text-sm/6">
-              {project.links.map((link) => {
-                const isExternal = /^https?:/i.test(link.url);
-
-                return (
-                  <Link
-                    key={link.url}
-                    href={link.url}
-                    target={isExternal ? "_blank" : undefined}
-                    rel={isExternal ? "noopener noreferrer" : undefined}
-                    className="app__outlined_btn !px-4 !py-2 !text-sm/6"
-                  >
-                    {link.title}
-                  </Link>
-                );
-              })}
-            </Row>
+            <span aria-current="page">{project.title}</span>
+          </nav>
+          <p className="font-mono text-[13px] text-faint">
+            {project.kind} · {project.duration} · {project.location}
+          </p>
+          <h1
+            id="project-title"
+            className="max-w-[820px] text-[clamp(36px,5.5vw,60px)] leading-[1.05] font-semibold tracking-[-0.04em] text-balance"
+          >
+            {project.title}
+          </h1>
+          <p className="max-w-[680px] text-[19px] leading-[1.6] text-pretty text-muted">
+            {project.summary}
+          </p>
+          {project.links.length ? (
+            <div className="mt-1 flex flex-wrap gap-3">
+              {project.links.map((link, i) => (
+                <ButtonLink
+                  key={link.url}
+                  href={link.url}
+                  variant={i === 0 ? "primary" : "secondary"}
+                  className="text-sm"
+                >
+                  {link.type === "github" ? (
+                    <GitHubIcon className="size-4" />
+                  ) : null}
+                  {link.title}
+                  <ArrowUpRight className="size-3.5" aria-hidden />
+                </ButtonLink>
+              ))}
+            </div>
           ) : null}
         </header>
 
-        {project.metrics && project.metrics.length > 0 ? (
-          <section
-            aria-labelledby="project-metrics-heading"
-            className="flex flex-col gap-6"
-          >
-            <SectionTitle
-              id="project-metrics-heading"
-              subtitle="Key outcomes delivered for stakeholders"
+        <dl className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,220px),1fr))] border-t">
+          {facts.map((fact) => (
+            <div
+              key={fact.label}
+              className="flex flex-col gap-1 border-b gutter py-5"
             >
-              Impact metrics
-            </SectionTitle>
-            <GridBox classNames="gap-6">
-              {project.metrics.map((metric) => (
-                <article
-                  key={`${project.id}-${metric.label}`}
-                  className="flex flex-col gap-2 rounded-2xl border border-[var(--textColor20)] bg-[var(--textColor10)] p-6"
-                  aria-label={`${metric.label} ${metric.value}`}
-                >
-                  <span className="text-sm/6 uppercase tracking-wide text-[var(--primaryColor)]">
-                    {metric.label}
-                  </span>
-                  <p className="text-3xl/10 font-semibold text-[var(--textColor)]">
-                    {metric.value}
-                  </p>
-                  {metric.description ? (
-                    <p className="text-sm/6 text-[var(--textColorLight)]">
-                      {metric.description}
-                    </p>
-                  ) : null}
-                </article>
-              ))}
-            </GridBox>
-          </section>
-        ) : null}
+              <dt className={factLabel}>{fact.label}</dt>
+              <dd className="text-[15px]">{fact.value}</dd>
+            </div>
+          ))}
+        </dl>
 
-        {project.highlights && project.highlights.length > 0 ? (
-          <section
-            aria-labelledby="project-highlights-heading"
-            className="flex flex-col gap-6"
-          >
-            <SectionTitle
-              id="project-highlights-heading"
-              subtitle="Notable milestones and system improvements"
-            >
-              Highlights
-            </SectionTitle>
-            <ul className="grid gap-4 text-base/7 md:text-lg/8 text-[var(--textColorLight)]">
-              {project.highlights.map((item) => (
-                <li
-                  key={item}
-                  className="rounded-2xl border border-[var(--textColor20)] bg-[var(--textColor10)] p-5"
-                >
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </section>
-        ) : null}
-
-        {project.responsibilities && project.responsibilities.length > 0 ? (
-          <section
-            aria-labelledby="project-responsibilities-heading"
-            className="flex flex-col gap-6"
-          >
-            <SectionTitle
-              id="project-responsibilities-heading"
-              subtitle="Where I created the most impact"
-            >
-              Responsibilities
-            </SectionTitle>
-            <ul className="grid gap-4 text-base/7 text-[var(--textColorLight)]">
-              {project.responsibilities.map((item) => (
-                <li key={item} className="relative pl-5">
-                  <span
-                    className="absolute left-0 top-2 h-2 w-2 rounded-full bg-[var(--primaryColor)]"
-                    aria-hidden="true"
-                  />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </section>
-        ) : null}
-
-        {project.context || project.approach || project.impact ? (
-          <section
-            aria-labelledby="project-narrative-heading"
-            className="flex flex-col gap-8"
-          >
-            <SectionTitle
-              id="project-narrative-heading"
-              subtitle="Snapshot of the project background, execution, and results"
-            >
-              Project narrative
-            </SectionTitle>
-            <div className="grid gap-6 md:grid-cols-3">
-              {project.context ? (
-                <article className="rounded-2xl border border-[var(--textColor20)] bg-[var(--textColor10)] p-6">
-                  <h3 className="text-xl/8 font-semibold text-[var(--textColor)]">
-                    Project context
-                  </h3>
-                  <p className="mt-3 text-base/7 text-[var(--textColorLight)]">
-                    {project.context}
-                  </p>
-                </article>
-              ) : null}
-              {project.approach ? (
-                <article className="rounded-2xl border border-[var(--textColor20)] bg-[var(--textColor10)] p-6">
-                  <h3 className="text-xl/8 font-semibold text-[var(--textColor)]">
-                    Approach
-                  </h3>
-                  <p className="mt-3 text-base/7 text-[var(--textColorLight)]">
-                    {project.approach}
-                  </p>
-                </article>
-              ) : null}
-              {project.impact ? (
-                <article className="rounded-2xl border border-[var(--textColor20)] bg-[var(--textColor10)] p-6">
-                  <h3 className="text-xl/8 font-semibold text-[var(--textColor)]">
-                    Impact
-                  </h3>
-                  <p className="mt-3 text-base/7 text-[var(--textColorLight)]">
-                    {project.impact}
-                  </p>
-                </article>
+        <section
+          aria-label="Results"
+          className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,260px),1fr))] border-b bg-surface"
+        >
+          {project.metrics.map((metric) => (
+            <div key={metric.label} className="flex flex-col gap-2 gutter py-8">
+              <span className="text-[52px] leading-none font-semibold tracking-[-0.045em] text-accent tabular-nums">
+                {metric.value}
+              </span>
+              <span className="text-[15px] font-medium">{metric.label}</span>
+              {metric.description ? (
+                <span className="text-sm text-muted">{metric.description}</span>
               ) : null}
             </div>
-          </section>
-        ) : null}
+          ))}
+        </section>
 
-        {project.tags && project.tags.length > 0 ? (
-          <section
-            aria-labelledby="project-tech-heading"
-            className="flex flex-col gap-4"
-          >
-            <SectionTitle
-              id="project-tech-heading"
-              subtitle="Tools and frameworks that powered the build"
-            >
-              Stack
-            </SectionTitle>
-            <Row classNames="flex-wrap gap-3 text-sm/6 text-[var(--textColorLight)]">
-              {project.tags.map((tag) => (
-                <span
-                  key={`${project.id}-${tag}`}
-                  className="rounded-full border border-[var(--textColor20)] px-3 py-1"
-                >
-                  {tag}
-                </span>
-              ))}
-            </Row>
-          </section>
-        ) : null}
-      </main>
+        <div className="flex max-w-[808px] flex-col gap-12 gutter pt-16 pb-[72px]">
+          <Narrative
+            index="01"
+            title="Context"
+            text={project.context}
+            bullets={[]}
+          />
+          <Narrative
+            index="02"
+            title="Approach"
+            text={project.approach}
+            bullets={project.responsibilities}
+          />
+          <Narrative
+            index="03"
+            title="Impact"
+            text={project.impact}
+            bullets={project.highlights}
+          />
+        </div>
+      </article>
+
+      <nav
+        aria-label="More projects"
+        className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,320px),1fr))] border-t"
+      >
+        <Link
+          href="/#work"
+          className="flex flex-col gap-1.5 border-b gutter py-7 transition-colors hover:bg-surface"
+        >
+          <span className="inline-flex items-center gap-1.5 font-mono text-xs text-faint">
+            <ArrowLeft className="size-3.5" aria-hidden />
+            Back
+          </span>
+          <span className="text-[17px] font-medium">All work</span>
+        </Link>
+        <Link
+          href={`/projects/${next.id}`}
+          className="flex flex-col items-end gap-1.5 border-b gutter py-7 text-right transition-colors hover:bg-surface"
+        >
+          <span className="inline-flex items-center gap-1.5 font-mono text-xs text-faint">
+            Next project
+            <ArrowRight className="size-3.5" aria-hidden />
+          </span>
+          <span className="text-[17px] font-medium">{next.title}</span>
+        </Link>
+      </nav>
 
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(schema, null, 2),
+          __html: JSON.stringify(buildJsonLd(project)),
         }}
       />
-    </PageBox>
+    </>
   );
 };
 

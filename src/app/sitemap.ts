@@ -1,34 +1,40 @@
-import { MetadataRoute } from "next";
-import LocalConfig from "@/constants/config";
+import type { MetadataRoute } from "next";
 import projects from "@/data/projects";
-
-const getBaseUrl = () => {
-  const raw = LocalConfig.values.NEXT_PUBLIC_SITE_URL;
-  return raw.startsWith("http")
-    ? raw.replace(/\/$/, "")
-    : `https://${raw.replace(/^https?:\/\//, "").replace(/\/$/, "")}`;
-};
+import { posts } from "@/lib/posts";
+import { absoluteUrl } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = getBaseUrl();
+  const lastModified = new Date();
+  const published = posts.filter((post) => !post.draft);
 
-  const baseEntries: MetadataRoute.Sitemap = [
+  return [
     {
-      url: `${baseUrl}/`,
+      url: absoluteUrl("/"),
       changeFrequency: "monthly",
       priority: 1,
-      lastModified: new Date(),
+      lastModified,
     },
-  ];
-
-  const projectEntries = projects.map<MetadataRoute.Sitemap[number]>(
-    (project) => ({
-      url: `${baseUrl}/projects/${project.id}`,
-      changeFrequency: "yearly",
+    ...projects.map((project) => ({
+      url: absoluteUrl(`/projects/${project.id}`),
+      changeFrequency: "yearly" as const,
       priority: 0.8,
-      lastModified: new Date(),
-    })
-  );
-
-  return [...baseEntries, ...projectEntries];
+      lastModified,
+    })),
+    ...(published.length
+      ? [
+          {
+            url: absoluteUrl("/writing"),
+            changeFrequency: "weekly" as const,
+            priority: 0.7,
+            lastModified,
+          },
+        ]
+      : []),
+    ...published.map((post) => ({
+      url: absoluteUrl(`/writing/${post.slug}`),
+      changeFrequency: "yearly" as const,
+      priority: 0.6,
+      lastModified: new Date(post.date),
+    })),
+  ];
 }

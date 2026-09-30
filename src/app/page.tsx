@@ -1,31 +1,37 @@
-import dynamic from "next/dynamic";
-import PageBox from "@/components/core/PageBox";
-import { menuItems } from "@/data/navMenus";
-import HomeSection1 from "@/components/home/Section1";
+import type { Metadata } from "next";
+import About from "@/components/home/About";
+import Contact from "@/components/home/Contact";
+import Experience from "@/components/home/Experience";
+import Hero from "@/components/home/Hero";
+import LatestWriting from "@/components/home/LatestWriting";
+import SelectedWork from "@/components/home/SelectedWork";
+import Stack from "@/components/home/Stack";
+import { posts } from "@/lib/posts";
 
-const HomeSection2 = dynamic(() => import("@/components/home/Section2"));
-const HomeSection3 = dynamic(() => import("@/components/home/Section3"));
-const HomeSection4 = dynamic(() => import("@/components/home/Section4"));
-const HomeSection5 = dynamic(() => import("@/components/home/Section5"));
-const HomeSection6 = dynamic(() => import("@/components/home/Section6"));
-
-const FloatingNavbar = dynamic(() =>
-  import("@/components/navbar/FloatingNavbar")
-);
-const ScrollToTop = dynamic(() => import("@/components/common/ScrollToTop"));
+export const metadata: Metadata = { alternates: { canonical: "/" } };
 
 const Home = () => {
+  const hasWriting = posts.length > 0;
+  // Section numbers stay sequential when Writing is hidden (no published posts yet).
+  const order = [
+    "work",
+    "experience",
+    ...(hasWriting ? ["writing"] : []),
+    "stack",
+    "about",
+  ];
+  const index = (id: string) => String(order.indexOf(id) + 1).padStart(2, "0");
+
   return (
-    <PageBox>
-      <FloatingNavbar className="app_nav" navItems={menuItems} />
-      <HomeSection1 id="hero" />
-      <HomeSection2 id="services" />
-      <HomeSection3 id="experiences" />
-      <HomeSection4 id="skills" />
-      <HomeSection5 id="projects" />
-      <HomeSection6 id="contact" />
-      <ScrollToTop />
-    </PageBox>
+    <>
+      <Hero />
+      <SelectedWork index={index("work")} />
+      <Experience index={index("experience")} />
+      {hasWriting ? <LatestWriting index={index("writing")} /> : null}
+      <Stack index={index("stack")} />
+      <About index={index("about")} hasWriting={hasWriting} />
+      <Contact />
+    </>
   );
 };
 

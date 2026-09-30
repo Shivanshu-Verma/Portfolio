@@ -10,6 +10,9 @@
 
 # next.js
 /.next/
+
+# content-collections
+/.content-collections
 /out/
 
 # production
@@ -34,8 +37,4 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# lock
-package-lock.json
-pnpm-lock.yaml
-yarn.lock
 .env
