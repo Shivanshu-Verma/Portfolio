@@ -6,9 +6,11 @@ import Hero from "@/components/home/Hero";
 import LatestWriting from "@/components/home/LatestWriting";
 import SelectedWork from "@/components/home/SelectedWork";
 import Stack from "@/components/home/Stack";
-import { posts } from "@/lib/posts";
+import { posts, rssAlternates } from "@/lib/posts";
 
-export const metadata: Metadata = { alternates: { canonical: "/" } };
+export const metadata: Metadata = {
+  alternates: { canonical: "/", ...rssAlternates },
+};
 
 const Home = () => {
   const hasWriting = posts.length > 0;

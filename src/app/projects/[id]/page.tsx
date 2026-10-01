@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 import { GitHubIcon } from "@/components/common/BrandIcons";
 import ButtonLink from "@/components/common/ButtonLink";
 import projects, { getProject } from "@/data/projects";
+import { rssAlternates } from "@/lib/posts";
 import { absoluteUrl, site } from "@/lib/site";
 import type { IProjectItem } from "@/types";
 
@@ -27,7 +28,7 @@ export async function generateMetadata({
     title: project.title,
     description: project.summary,
     keywords: project.tags,
-    alternates: { canonical: path },
+    alternates: { canonical: path, ...rssAlternates },
     openGraph: {
       type: "article",
       title: project.title,

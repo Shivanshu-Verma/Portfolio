@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import MdxContent from "@/components/post/MdxContent";
 import TableOfContents from "@/components/post/TableOfContents";
-import { formatPostDate, getPost, posts } from "@/lib/posts";
+import { formatPostDate, getPost, posts, rssAlternates } from "@/lib/posts";
 import { absoluteUrl, site } from "@/lib/site";
 
 type PostPageProps = { params: Promise<{ slug: string }> };
@@ -25,7 +25,7 @@ export async function generateMetadata({
   return {
     title: post.title,
     description: post.summary,
-    alternates: { canonical: path },
+    alternates: { canonical: path, ...rssAlternates },
     robots: post.draft ? { index: false, follow: false } : undefined,
     openGraph: {
       type: "article",

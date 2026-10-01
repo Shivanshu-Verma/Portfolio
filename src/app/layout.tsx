@@ -7,7 +7,7 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import SiteFooter from "@/components/layout/SiteFooter";
 import SiteHeader from "@/components/layout/SiteHeader";
-import { posts } from "@/lib/posts";
+import { rssAlternates } from "@/lib/posts";
 import { absoluteUrl, site } from "@/lib/site";
 
 // Runs before first paint so a saved light theme never flashes dark (Next "preventing flash" guide).
@@ -101,15 +101,7 @@ export const metadata: Metadata = {
     creator: `@${site.handle}`,
     site: `@${site.handle}`,
   },
-  alternates: posts.length
-    ? {
-        types: {
-          "application/rss+xml": [
-            { url: "/rss.xml", title: `${site.name} · Writing` },
-          ],
-        },
-      }
-    : undefined,
+  alternates: rssAlternates,
   robots: {
     index: true,
     follow: true,

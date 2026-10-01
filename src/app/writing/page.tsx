@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Rss } from "lucide-react";
 import WritingList from "@/components/writing/WritingList";
-import { posts, toSummary } from "@/lib/posts";
+import { posts, rssAlternates, toSummary } from "@/lib/posts";
 
 const description =
   "Notes on backend systems, infrastructure and security, written up after I had to figure them out.";
@@ -10,7 +10,7 @@ const description =
 export const metadata: Metadata = {
   title: "Writing",
   description,
-  alternates: { canonical: "/writing" },
+  alternates: { canonical: "/writing", ...rssAlternates },
 };
 
 const WritingPage = () => {
