@@ -8,36 +8,39 @@ const experience: IExperienceItem[] = [
     start: "Jul 2026",
     current: true,
     summary:
-      "Backend engineer on DoubleTick's WhatsApp CRM platform: NestJS and Node.js services on PostgreSQL, Redis and Kafka, running on AWS.",
-    highlights: [
-      "Build public API endpoints, including bulk conversation actions with per-conversation permission checks.",
-      "Work on role-based permissions that span services, and on reconciling WhatsApp message and call costs so reported charges match actual billing.",
-      "Moved backend services onto Docker with Jenkins CI/CD and Terraform-managed AWS infrastructure, and wrote the team's onboarding handbook for it.",
-    ],
+      "Backend and infrastructure engineer on DoubleTick's WhatsApp CRM platform: Node.js and NestJS services on PostgreSQL, Redis, Kafka and Elasticsearch, running on AWS.",
   },
   {
-    role: "Full-stack developer",
+    role: "Mentor",
     company: "DevlUp Labs",
-    start: "Feb 2024",
-    end: "Apr 2026",
+    start: "Apr 2025",
+    current: true,
     summary:
-      "Built and led MERN projects in IIT Jodhpur's developer club, with secure coding practices baked in.",
+      "Mentor early-stage developers in IIT Jodhpur's open-source developer community on backend development, DevOps and systems programming, and review their projects and pull requests for code quality, security and architecture.",
   },
   {
-    role: "Cybersecurity core team",
-    company: "Google Developer Student Clubs",
-    start: "Sep 2023",
-    end: "Apr 2026",
+    role: "Core team member",
+    company: "DevlUp Labs",
+    start: "Mar 2024",
+    end: "Apr 2025",
     summary:
-      "Security assessments and projects with Nmap, Metasploit, Burp Suite, Wireshark and Ghidra.",
+      "Helped run IIT Jodhpur's open-source developer club and grow its membership.",
   },
   {
-    role: "Cybersecurity problem statement",
-    company: "Inter-IIT Tech Meet 12.0",
+    role: "Cybersecurity core member",
+    company: "Google Developer Student Clubs, IIT Jodhpur",
+    start: "Jan 2023",
+    end: "Sep 2024",
+    summary:
+      "Co-led the cybersecurity track: web application security, CTF and network-threat sessions, and hands-on Burp Suite, Nmap, Wireshark and Metasploit workshops.",
+  },
+  {
+    role: "Team member, CERT-In cybersecurity challenge",
+    company: "Inter IIT Tech Meet 12.0",
     start: "Sep 2023",
     end: "Dec 2023",
     summary:
-      "A DevSecOps pipeline with Jenkins, SonarQube, OWASP checks and Trivy. Placed top 5 of 21 IITs at IIT Madras.",
+      "Placed top 5 of 21 IITs. Built a Jenkins DevSecOps pipeline for Docker and Kubernetes with SonarQube, OWASP Dependency-Check and Trivy scans.",
   },
 ];
 

@@ -23,7 +23,7 @@ export interface IProjectLink {
 export interface IProjectItem {
   id: string;
   title: string;
-  kind: "Team project" | "Personal project" | "Coursework";
+  kind: "Team project" | "Course project" | "Personal project" | "Coursework";
   repo: "public" | "private";
   year: string;
   /** Short context shown on the card next to the project kind. */

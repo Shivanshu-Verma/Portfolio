@@ -4,18 +4,18 @@ const projects: IProjectItem[] = [
   {
     id: "kubernetes-orchestration",
     title: "Cost-efficient Kubernetes orchestration",
-    kind: "Team project",
+    kind: "Course project",
     repo: "public",
     year: "2025",
     note: "GCP",
     description:
-      "A custom scheduler and hybrid autoscaler that bin-packs mixed workloads onto heterogeneous, preemptible VMs.",
+      "A Kubernetes scheduler and autoscaler for GKE, implementing a published ACM paper, that bin-packs mixed workloads onto heterogeneous VMs.",
     summary:
-      "A custom Kubernetes scheduler and hybrid task autoscaler (HTAS) for GKE that packs microservices and batch jobs onto heterogeneous, preemptible VMs.",
+      "A Kubernetes scheduler and hybrid task autoscaler (HTAS) for GKE, implementing a published ACM paper, that bin-packs 10+ services and batch jobs onto heterogeneous VMs.",
     duration: "Jan — Apr 2025",
     location: "IIT Jodhpur",
-    roles: ["Cloud architect", "Systems engineer"],
-    tags: ["Kubernetes", "GCP", "Python", "Prometheus"],
+    roles: ["Systems engineer", "Task Packer and autoscaler design lead"],
+    tags: ["Kubernetes", "GCP", "Python"],
     lead: {
       value: "↓28%",
       label: "compute cost vs the default GKE scheduler",
@@ -50,124 +50,18 @@ const projects: IProjectItem[] = [
       },
     ],
     context:
-      "High GKE costs from inefficient default scheduling created the need for custom orchestration tuned for mixed workloads and preemptible resources.",
+      "High GKE costs from inefficient default scheduling created the need for custom orchestration tuned for mixed workloads on heterogeneous VMs.",
     approach:
       "A modular Kubernetes extension built on CRDs, with autoscaling driven by real-time resource profiling and integrated with GCP's managed cluster APIs.",
     impact:
-      "A cost-conscious orchestration platform with measurable infrastructure savings and better utilisation, informing further cloud infrastructure research at IIT Jodhpur.",
+      "28% lower compute cost and 35% higher utilisation than the default scheduler, validated by stress tests and GCP billing.",
     responsibilities: [
-      "Built the scheduler and autoscaler (HTAS) on CRDs with event-driven scaling for GKE clusters.",
+      "Implemented a published ACM paper as a Kubernetes scheduler and autoscaler on GKE, built on CRDs.",
       "Designed a Resource Profiler that characterises workloads, and a Task Packer that places them with BFD/TBFD bin-packing.",
-      "Benchmarked synthetic and real workloads, tuning placement heuristics for mixed VM sizes.",
+      "Led the Task Packer and autoscaler design in a team of 3, and benchmarked placement on synthetic and real workloads.",
     ],
     highlights: [
       "28% lower cost and 35% higher utilisation than the default GKE scheduler.",
-      "Fault-tolerant scheduling that stays correct through preemptible VM churn.",
-      "Per-pod telemetry in Prometheus for real-time scaling decisions.",
-    ],
-  },
-  {
-    id: "prometeo",
-    title: "Prometeo, IIT Jodhpur's tech fest",
-    kind: "Team project",
-    repo: "public",
-    year: "2024",
-    note: "Live site",
-    description:
-      "A 3D landing experience on a cached Django API, with Razorpay ticketing, deployed in containers on AWS.",
-    summary:
-      "The relaunch of IIT Jodhpur's annual tech fest portal: an immersive 3D landing experience that stayed fast for 25k+ visitors through ticketing peaks.",
-    duration: "Oct — Dec 2024",
-    location: "IIT Jodhpur",
-    roles: ["Full-stack developer", "DevOps"],
-    tags: ["Django", "Redis", "Docker", "AWS", "Three.js"],
-    lead: { value: "25k+", label: "visitors at launch, zero payment failures" },
-    metrics: [
-      {
-        value: "↓42%",
-        label: "Page load",
-        description: "LCP dropped from 3.8s to 2.2s after the asset pipeline",
-      },
-      {
-        value: "25k+",
-        label: "Visitors",
-        description: "Unique visitors over the three-day launch window",
-      },
-      {
-        value: "0",
-        label: "Incidents",
-        description: "No downtime or payment failures during registrations",
-      },
-    ],
-    links: [
-      { title: "Live site", url: "https://prometeo.in/", type: "live" },
-      {
-        title: "Server repository",
-        url: "https://github.com/Shivanshu-Verma/server-prometeo-25",
-        type: "github",
-      },
-    ],
-    context:
-      "The organising team needed a visually striking site that could take sudden ticket-sale surges without compromising security or UX.",
-    approach:
-      "Modernised the 3D experience with progressive loading, served content through a hardened Django API, and containerised the stack with CI-driven deployments.",
-    impact:
-      "A resilient launch with strong Core Web Vitals, better pass conversion, and positive feedback from attendees and sponsors.",
-    responsibilities: [
-      "Refined Three.js scene composition and glTF optimisation to keep LCP under 2s on broadband.",
-      "Built a stateless Django API with Redis caching and auto-scaling Docker deployment on AWS Fargate.",
-      "Integrated Razorpay checkout with webhook validation, CSRF safeguards and encrypted audit logs.",
-    ],
-    highlights: [
-      "Cut the hero scene payload by 38% with mesh decimation, texture compression and route-level code splitting.",
-      "Automated CloudFront cache invalidation so content was fresh within 60 seconds of publishing.",
-      "Real-time ticket inventory dashboard for the core organising team.",
-    ],
-  },
-  {
-    id: "iitj-voting-app",
-    title: "IIT Jodhpur election system",
-    kind: "Team project",
-    repo: "private",
-    year: "2023",
-    note: "Private repo",
-    description:
-      "A kiosk voting app with signed, encrypted ballots, biometric and OTP verification, and tamper-evident audit logs.",
-    summary:
-      "A kiosk-ready desktop voting application with encrypted ballot storage, biometric verification and admin dashboards for the IIT Jodhpur election committee.",
-    duration: "Aug — Oct 2023",
-    location: "IIT Jodhpur",
-    roles: ["Full-stack engineer", "Security lead"],
-    tags: ["Electron", "React", "Django", "PostgreSQL", "Cryptography"],
-    lead: { value: "2.1k", label: "ballots cast across 12 polling stations" },
-    metrics: [
-      {
-        value: "2.1k",
-        label: "Ballots processed",
-        description: "Secure votes cast across 12 polling stations",
-      },
-      {
-        value: "<5s",
-        label: "Verification",
-        description: "Average biometric and OTP verification time",
-      },
-    ],
-    links: [],
-    context:
-      "Manual paper-based elections were error-prone, slow, and open to manipulation.",
-    approach:
-      "A secure digital voting system with layered authentication, offline resilience and transparent audit trails.",
-    impact:
-      "Used in the 2023 student body elections with no disputed ballots and fast result publication.",
-    responsibilities: [
-      "Built a cross-platform Electron shell with offline-first caching for remote polling booths.",
-      "Engineered Django REST services with cryptographic ballot signing and audit-ready event logs.",
-      "Integrated an Aadhaar-based biometric SDK with a fallback OTP verification flow.",
-    ],
-    highlights: [
-      "Digitised the end-to-end voting flow, cutting manual counting effort by 80%.",
-      "Role-based access control for commissioners, poll officers and observers.",
-      "Tamper detection that locks a station on suspicious state changes.",
     ],
   },
   {
@@ -175,27 +69,27 @@ const projects: IProjectItem[] = [
     title: "Virus detection engine",
     kind: "Coursework",
     repo: "public",
-    year: "2023",
+    year: "2024",
     note: "Windows",
     description:
-      "Multi-threaded SHA-256 signature scanning plus Win32 API hooking with Microsoft Detours to watch processes live.",
+      "A parallel MD5/SHA-256 signature scanner plus Win32 API hooking with Microsoft Detours to watch processes live.",
     summary:
-      "A Windows-native malware detection prototype with signature scanning, heuristic analysis and quarantine for suspicious processes.",
-    duration: "Jan — Apr 2023",
+      "A Windows malware detector that combines a parallel MD5/SHA-256 signature scanner with live Win32 API hooking via Microsoft Detours.",
+    duration: "Sep — Nov 2024",
     location: "IIT Jodhpur",
     roles: ["Systems programmer"],
-    tags: ["C/C++", "Microsoft Detours", "SHA-256", "Win32"],
-    lead: { value: "96%", label: "detection rate, under 1% false positives" },
+    tags: ["C/C++", "Microsoft Detours", "MD5/SHA-256", "Win32"],
+    lead: { value: "100k+", label: "signatures checked per second" },
     metrics: [
       {
-        value: "96%",
-        label: "Detection rate",
-        description: "On a curated virus corpus during evaluation",
+        value: "100k+",
+        label: "Signatures/s",
+        description: "Parallel MD5/SHA-256 signature matching",
       },
       {
-        value: "<1%",
-        label: "False positives",
-        description: "After heuristic tuning and whitelist support",
+        value: "↓25%",
+        label: "Scan time",
+        description: "Average scan time vs the previous version",
       },
     ],
     links: [
@@ -210,17 +104,113 @@ const projects: IProjectItem[] = [
     approach:
       "Hash-based scanning combined with API hooking, so signature checks run alongside behavioural heuristics.",
     impact:
-      "Reliable detection in academic evaluation and a foundation for further research.",
+      "A working detector that combines signature scanning with live API hooking and behavioural alerts.",
     responsibilities: [
       "Developed a multi-threaded scanning core using memory-mapped files for signature throughput.",
       "Hooked critical Win32 APIs with Microsoft Detours to observe file and registry operations in real time.",
-      "Wrote the heuristic scoring and quarantine workflow with a CLI reporting dashboard.",
     ],
     highlights: [
-      "120k signature comparisons per second on the benchmark dataset.",
-      "A sandbox simulator that replays malware behaviour for detection tuning.",
-      "Exportable incident reports for security teams.",
+      "Checks 100,000+ signatures per second, cutting average scan time 25%.",
+      "Hooks syscalls, file I/O and registry APIs via Microsoft Detours to flag malicious runtime behaviour.",
+      "Behavioural and network analysis that raises real-time email alerts with the affected directories.",
     ],
+  },
+  {
+    id: "prometeo",
+    title: "Prometeo, IIT Jodhpur's tech fest",
+    kind: "Team project",
+    repo: "public",
+    year: "2024",
+    note: "Live site",
+    description:
+      "IIT Jodhpur's tech fest platform: a 3D landing experience on a cached Django API with JWT auth and payments, deployed in Docker on AWS.",
+    summary:
+      "IIT Jodhpur's annual tech fest portal, serving 5,000 users through registration, sign-in and payments.",
+    duration: "Nov 2024 — Jan 2025",
+    location: "IIT Jodhpur",
+    roles: ["Head of Web Development"],
+    tags: ["Django", "Redis", "Docker", "AWS", "Nginx", "Three.js"],
+    lead: {
+      value: "5,000",
+      label: "users through registration, sign-in and payments",
+    },
+    metrics: [
+      {
+        value: "↓60%",
+        label: "Server load",
+        description: "Redis caching in front of the Django API",
+      },
+      {
+        value: "↓80%",
+        label: "3D load time",
+        description: "70% polygon reduction plus texture compression",
+      },
+      {
+        value: "5,000",
+        label: "Users",
+        description: "Registration, sign-in and payments",
+      },
+    ],
+    links: [
+      { title: "Live site", url: "https://prometeo.in/", type: "live" },
+      {
+        title: "Server repository",
+        url: "https://github.com/Shivanshu-Verma/server-prometeo-25",
+        type: "github",
+      },
+    ],
+    context:
+      "The organising team needed a visually striking site that could take ticket-sale surges without compromising security.",
+    approach:
+      "Optimised the Three.js scenes, cached the Django API with Redis, and deployed the Dockerized stack on AWS behind hardened Nginx.",
+    impact:
+      "Served 5,000 users through registration and payments, with server load cut 60% by caching and 3D load time cut 80%.",
+    responsibilities: [
+      "Led web development for the platform as Head of Web Development.",
+      "Built JWT authentication and integrated online payments.",
+      "Cut 3D load time 80% with a 70% polygon reduction and texture compression.",
+    ],
+    highlights: [
+      "Redis caching cut server load 60%.",
+      "Deployed on AWS in Docker behind firewalls, hardened Nginx and rate limiting, with active logging and real-time monitoring.",
+    ],
+  },
+  {
+    id: "iitj-voting-app",
+    title: "IIT Jodhpur election system",
+    kind: "Team project",
+    repo: "private",
+    year: "2023",
+    note: "Private repo",
+    description:
+      "A secure, confidential voting portal with asymmetrically encrypted ballots and biometric voter verification.",
+    summary:
+      "A secure, confidential voting portal for a student body election at IIT Jodhpur, used by about 3,000 people.",
+    duration: "Mar — Apr 2023",
+    location: "IIT Jodhpur",
+    roles: ["Developer"],
+    tags: ["Django", "React", "Docker", "Cryptography"],
+    lead: { value: "~3,000", label: "people voted through it" },
+    metrics: [
+      {
+        value: "~3,000",
+        label: "Voters",
+        description: "Student body election at IIT Jodhpur",
+      },
+    ],
+    links: [],
+    context:
+      "The student body election needed a secure, confidential way for people to vote.",
+    approach:
+      "Django and React, with asymmetric encryption for stored votes, biometric voter verification and a containerised deployment.",
+    impact:
+      "Used by about 3,000 people in a student body election at IIT Jodhpur.",
+    responsibilities: [
+      "Designed and built the portal with a team in Django and React.",
+      "Encrypted stored votes with asymmetric cryptography and verified voters biometrically.",
+      "Containerised the app for consistent, fast deployment.",
+    ],
+    highlights: [],
   },
 ];
 

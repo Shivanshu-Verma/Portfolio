@@ -21,9 +21,6 @@ const SiteFooter = () => (
         <a href={site.links.source} className={linkClass}>
           Source
         </a>
-        <a href={site.links.coffee} className={linkClass}>
-          Buy me a coffee
-        </a>
       </nav>
     </div>
   </footer>

@@ -9,13 +9,13 @@ export const site = {
   url: normalizeUrl(
     process.env.NEXT_PUBLIC_SITE_URL || "https://shivanshu.site",
   ),
-  title: "Shivanshu Verma · Backend engineer",
+  title: "Shivanshu Verma · Backend & infrastructure engineer",
   description:
-    "Shivanshu Verma, backend engineer (SDE-2) at DoubleTick. APIs, message pipelines and infrastructure; projects, experience and writing.",
+    "Shivanshu Verma, backend and infrastructure engineer (SDE-2) at DoubleTick. APIs, message pipelines and the infrastructure they run on; projects, experience and writing.",
   jobTitle: "Software Development Engineer II",
   company: { name: "DoubleTick", url: "https://doubletick.io" },
   email: "v2.shivanshu@gmail.com",
-  location: "Jodhpur, Rajasthan, India",
+  location: "Lucknow, Uttar Pradesh, India",
   college: "Indian Institute of Technology (IIT) Jodhpur",
   gaId: process.env.NEXT_PUBLIC_GTAG_ID,
   /** Undefined when NEXT_PUBLIC_RESUME_LINK is unset; résumé links are hidden then. */
@@ -24,10 +24,8 @@ export const site = {
     github: "https://www.github.com/Shivanshu-Verma",
     linkedin: "https://www.linkedin.com/in/verma-shivanshu",
     x: "https://www.twitter.com/ShivanshuV_",
-    instagram: "https://www.instagram.com/_shivanshuv",
     email: "mailto:v2.shivanshu@gmail.com",
-    source: "https://github.com/Shivanshu-Verma/Portfolio",
-    coffee: "https://www.buymeacoffee.com/shivanshuv",
+    source: "https://github.com/Shivanshu-Verma/Portfolio/tree/revamp",
   },
 } as const;
 
